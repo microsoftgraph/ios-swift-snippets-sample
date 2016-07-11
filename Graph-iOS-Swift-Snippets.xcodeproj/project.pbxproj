@@ -22,6 +22,8 @@
 		96C4ED971CF6707600B97245 /* UserSnippets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C4ED961CF6707600B97245 /* UserSnippets.swift */; };
 		96C4ED991CF6709D00B97245 /* GroupsSnippets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C4ED981CF6709D00B97245 /* GroupsSnippets.swift */; };
 		96C80A781CEA93AA005D8FC4 /* ApplicationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C80A771CEA93AA005D8FC4 /* ApplicationConstants.swift */; };
+		96D11E851D341B6400E0A098 /* testAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D11E841D341B6400E0A098 /* testAuthProvider.swift */; };
+		96D11E871D341BC700E0A098 /* testUserArgs.json in Resources */ = {isa = PBXBuildFile; fileRef = 96D11E861D341BC700E0A098 /* testUserArgs.json */; };
 		96E8E3761CF3D5CE00E3795C /* EmailBody.html in Resources */ = {isa = PBXBuildFile; fileRef = 96E8E3751CF3D5CE00E3795C /* EmailBody.html */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +59,8 @@
 		96C4ED981CF6709D00B97245 /* GroupsSnippets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsSnippets.swift; sourceTree = "<group>"; };
 		96C80A731CEA9377005D8FC4 /* Graph-iOS-Swift-Snippets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Graph-iOS-Swift-Snippets-Bridging-Header.h"; sourceTree = "<group>"; };
 		96C80A771CEA93AA005D8FC4 /* ApplicationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationConstants.swift; sourceTree = "<group>"; };
+		96D11E841D341B6400E0A098 /* testAuthProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testAuthProvider.swift; sourceTree = "<group>"; };
+		96D11E861D341BC700E0A098 /* testUserArgs.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testUserArgs.json; sourceTree = "<group>"; };
 		96E8E3751CF3D5CE00E3795C /* EmailBody.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EmailBody.html; sourceTree = "<group>"; };
 		D36F110EF726F6B50218B20C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,7 +104,9 @@
 		96A9DFB31D3074A800560A64 /* Graph-iOS-Swift-SnippetsTests */ = {
 			isa = PBXGroup;
 			children = (
+				96D11E841D341B6400E0A098 /* testAuthProvider.swift */,
 				96A9DFB41D3074A800560A64 /* Graph_iOS_Swift_SnippetsTests.swift */,
+				96D11E861D341BC700E0A098 /* testUserArgs.json */,
 				96A9DFB61D3074A800560A64 /* Info.plist */,
 			);
 			path = "Graph-iOS-Swift-SnippetsTests";
@@ -281,6 +287,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96D11E871D341BC700E0A098 /* testUserArgs.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96D11E851D341B6400E0A098 /* testAuthProvider.swift in Sources */,
 				96A9DFB51D3074A800560A64 /* Graph_iOS_Swift_SnippetsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -551,6 +559,7 @@
 				96A9DFBA1D3074A800560A64 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		96B34CCB1CE548C500B6F4E8 /* Build configuration list for PBXProject "Graph-iOS-Swift-Snippets" */ = {
 			isa = XCConfigurationList;
