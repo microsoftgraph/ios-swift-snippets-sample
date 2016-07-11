@@ -12,9 +12,14 @@ import XCTest
 
 class Graph_iOS_Swift_SnippetsTests: XCTestCase {
     
+    var graphClient: MSGraphClient!
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        MSGraphClient.setAuthenticationProvider(testAuthProvider())
+        graphClient = MSGraphClient.defaultClient()
     }
     
     override func tearDown() {
@@ -22,16 +27,19 @@ class Graph_iOS_Swift_SnippetsTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        let _ = MS_AADV2_TOKEN_TYPE
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
+    // check for getting user information: GET ME
+    func testGetUserInformation() {
+        let readyExpectation = expectationWithDescription("ready")
+        graphClient.me().request().getWithCompletion({ (user: MSGraphUser?, error: NSError?) in
+            XCTAssertNotNil(user, "User data should not be nil")
+            XCTAssertNil(error, "Error should be nil")
+            
+            readyExpectation.fulfill()
+        })
+        
+        waitForExpectationsWithTimeout(10) { (error: NSError?) in
+            XCTAssertNil(error, "Timeout")
+            return
         }
     }
     
