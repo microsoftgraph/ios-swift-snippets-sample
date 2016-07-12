@@ -12,8 +12,9 @@ import UIKit
 
 class testAuthProvider: NSObject, MSAuthenticationProvider {
     
-    var accessToken: String   = ""
-
+    var accessToken: String?
+    var userEmail: String!
+    
     let contentType           = "application/x-www-form-urlencoded"
     let grantType             = "password"
     let tokenEndPoint         = "https://login.microsoftonline.com/common/oauth2/token"
@@ -23,10 +24,20 @@ class testAuthProvider: NSObject, MSAuthenticationProvider {
     let tokenType             = "bearer"
     let apiHeaderAuthrization = "Authorization"
     
+    override init() {
+        super.init()
+        let path = NSBundle(forClass: self.dynamicType).pathForResource("testUserArgs", ofType: "json")
+        
+        let jsonData = try! NSData(contentsOfFile: path!, options: .DataReadingMappedIfSafe)
+        let jsonResult = try! NSJSONSerialization.JSONObjectWithData(jsonData, options: []) as! NSDictionary
+        
+        userEmail = jsonResult["test.username"] as! String
+    }
+    
     @objc func appendAuthenticationHeaders(request: NSMutableURLRequest!, completion completionHandler: MSAuthenticationCompletion!) {
         
-        if accessToken != "" {
-            let oauthAuthorizationHeader = String(format: "%@ %@", tokenType, accessToken)
+        if let _ = accessToken {
+            let oauthAuthorizationHeader = String(format: "%@ %@", tokenType, accessToken!)
             request.setValue(oauthAuthorizationHeader, forHTTPHeaderField: self.apiHeaderAuthrization)
             completionHandler(request, nil)
         }
@@ -39,6 +50,8 @@ class testAuthProvider: NSObject, MSAuthenticationProvider {
             let username = jsonResult["test.username"] as! String
             let password = jsonResult["test.password"] as! String
             let clientId = jsonResult["test.clientId"] as! String
+    
+            userEmail = username
             
             let authRequest = NSMutableURLRequest()
             let bodyString = "grant_type=\(grantType)&resource=\(resourceId)&client_id=\(clientId)&username=\(username)&password=\(password)"
@@ -54,14 +67,14 @@ class testAuthProvider: NSObject, MSAuthenticationProvider {
                 if let validData = data {
                     let jsonDictionary = try! NSJSONSerialization.JSONObjectWithData(validData, options: .AllowFragments) as! NSDictionary
                     if let accessTokenReturned = jsonDictionary["access_token"] {
-                        self.accessToken = accessTokenReturned as! String
+                        self.accessToken = accessTokenReturned as? String
                     }
                     else {
                         self.accessToken = "WRONG_TOKEN"
                     }
                 }
                 
-                let oauthAuthorizationHeader = String(format: "%@ %@", self.tokenType, self.accessToken)
+                let oauthAuthorizationHeader = String(format: "%@ %@", self.tokenType, self.accessToken!)
                 request.setValue(oauthAuthorizationHeader, forHTTPHeaderField: self.apiHeaderAuthrization)
                 completionHandler(request, error)
             })
