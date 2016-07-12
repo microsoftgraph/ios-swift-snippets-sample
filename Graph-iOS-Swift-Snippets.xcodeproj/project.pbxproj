@@ -24,6 +24,7 @@
 		96C80A781CEA93AA005D8FC4 /* ApplicationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C80A771CEA93AA005D8FC4 /* ApplicationConstants.swift */; };
 		96D11E851D341B6400E0A098 /* testAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D11E841D341B6400E0A098 /* testAuthProvider.swift */; };
 		96D11E871D341BC700E0A098 /* testUserArgs.json in Resources */ = {isa = PBXBuildFile; fileRef = 96D11E861D341BC700E0A098 /* testUserArgs.json */; };
+		96D11E891D34260500E0A098 /* UserSnippetsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D11E881D34260500E0A098 /* UserSnippetsTest.swift */; };
 		96E8E3761CF3D5CE00E3795C /* EmailBody.html in Resources */ = {isa = PBXBuildFile; fileRef = 96E8E3751CF3D5CE00E3795C /* EmailBody.html */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		96C80A771CEA93AA005D8FC4 /* ApplicationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationConstants.swift; sourceTree = "<group>"; };
 		96D11E841D341B6400E0A098 /* testAuthProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testAuthProvider.swift; sourceTree = "<group>"; };
 		96D11E861D341BC700E0A098 /* testUserArgs.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testUserArgs.json; sourceTree = "<group>"; };
+		96D11E881D34260500E0A098 /* UserSnippetsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSnippetsTest.swift; sourceTree = "<group>"; };
 		96E8E3751CF3D5CE00E3795C /* EmailBody.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EmailBody.html; sourceTree = "<group>"; };
 		D36F110EF726F6B50218B20C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,6 +108,7 @@
 			children = (
 				96D11E841D341B6400E0A098 /* testAuthProvider.swift */,
 				96A9DFB41D3074A800560A64 /* Graph_iOS_Swift_SnippetsTests.swift */,
+				96D11E881D34260500E0A098 /* UserSnippetsTest.swift */,
 				96D11E861D341BC700E0A098 /* testUserArgs.json */,
 				96A9DFB61D3074A800560A64 /* Info.plist */,
 			);
@@ -360,6 +363,7 @@
 			files = (
 				96D11E851D341B6400E0A098 /* testAuthProvider.swift in Sources */,
 				96A9DFB51D3074A800560A64 /* Graph_iOS_Swift_SnippetsTests.swift in Sources */,
+				96D11E891D34260500E0A098 /* UserSnippetsTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

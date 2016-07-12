@@ -12,21 +12,22 @@ import UIKit
 
 class testAuthProvider: NSObject, MSAuthenticationProvider {
     
-    var accessToken: String = ""
-    
-    let contentType   = "application/x-www-form-urlencoded"
-    let grantType     = "password"
-    let tokenEndPoint = "https://login.microsoftonline.com/common/oauth2/token"
-    let requestType   = "POST"
-    let subjet        = "Email send from test in iOS connect sample"
-    let body          = "<html><body>The body of the test email</body></html>"
-    let resourceId    = "https://graph.microsoft.com"
+    var accessToken: String   = ""
 
+    let contentType           = "application/x-www-form-urlencoded"
+    let grantType             = "password"
+    let tokenEndPoint         = "https://login.microsoftonline.com/common/oauth2/token"
+    let requestType           = "POST"
+    let resourceId            = "https://graph.microsoft.com"
+
+    let tokenType             = "bearer"
+    let apiHeaderAuthrization = "Authorization"
+    
     @objc func appendAuthenticationHeaders(request: NSMutableURLRequest!, completion completionHandler: MSAuthenticationCompletion!) {
         
         if accessToken != "" {
-            let oauthAuthorizationHeader = String(format: "%@ %@", MS_AADV2_TOKEN_TYPE, accessToken)
-            request.setValue(MS_API_HEADER_AUTHORIZATION, forHTTPHeaderField: oauthAuthorizationHeader)
+            let oauthAuthorizationHeader = String(format: "%@ %@", tokenType, accessToken)
+            request.setValue(oauthAuthorizationHeader, forHTTPHeaderField: self.apiHeaderAuthrization)
             completionHandler(request, nil)
         }
         else {
@@ -60,9 +61,8 @@ class testAuthProvider: NSObject, MSAuthenticationProvider {
                     }
                 }
                 
-                let oauthAuthorizationHeader = String(format: "%@ %@", MS_AADV2_TOKEN_TYPE, self.accessToken)
-                request.setValue(oauthAuthorizationHeader, forHTTPHeaderField: MS_API_HEADER_AUTHORIZATION)
-
+                let oauthAuthorizationHeader = String(format: "%@ %@", self.tokenType, self.accessToken)
+                request.setValue(oauthAuthorizationHeader, forHTTPHeaderField: self.apiHeaderAuthrization)
                 completionHandler(request, error)
             })
             task.resume()
