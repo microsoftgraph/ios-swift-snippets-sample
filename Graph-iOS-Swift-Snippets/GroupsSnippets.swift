@@ -246,7 +246,9 @@ struct CreateGroup: Snippet {
                     completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Group ID not returned")))
                     return
                 }
+                print("id", addedGroup!.entityId)
                 completion(result: .Success(displayText: "Group \(addedGroup!.displayName) was added"))
+                
             }
         }
     }
@@ -261,7 +263,7 @@ struct UpdateGroup: Snippet {
         
         // Enter a valid group ID,
         // This can be found from getting list of groups or creating a new group
-        let groupId: String = "ENTER_GROUP_ID" //"047dc3cc-88ce-4f55-82f3-f8fe8c79f393"
+        let groupId: String = "070fcdec-b187-498e-8c1e-663e3e7fb418" //"047dc3cc-88ce-4f55-82f3-f8fe8c79f393"
     
         Snippets.graphClient.groups(groupId).request().getWithCompletion { (group: MSGraphGroup?, error: NSError?) in
             if let nsError = error {
@@ -277,6 +279,8 @@ struct UpdateGroup: Snippet {
                 validGroup.displayName = "Updated group display name"
                 Snippets.graphClient.groups(validGroup.entityId).request().update(validGroup, withCompletion: {
                     (group: MSGraphGroup?, error: NSError?) in
+                    
+                    print(group, error)
                     if let nsError = error {
                         completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
                         return
