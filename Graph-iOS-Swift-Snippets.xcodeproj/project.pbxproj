@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5085EBF7A5F2C5E2C786711B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F3ABC6A8C60633E0965AEB9 /* libPods.a */; };
 		960EBA121CEA8472007B8171 /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960EBA111CEA8472007B8171 /* ConnectViewController.swift */; };
+		9665FF951D3D8D77004A8112 /* GroupsSnippetsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9665FF941D3D8D77004A8112 /* GroupsSnippetsTest.swift */; };
 		9682B8C31CEA92B500EEA064 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9682B8C21CEA92B500EEA064 /* Authentication.swift */; };
 		96A9DFB51D3074A800560A64 /* Graph_iOS_Swift_SnippetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A9DFB41D3074A800560A64 /* Graph_iOS_Swift_SnippetsTests.swift */; };
 		96B34CD41CE548C500B6F4E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B34CD31CE548C500B6F4E8 /* AppDelegate.swift */; };
@@ -42,6 +43,7 @@
 		5D6F5CFB840D25425535ABB0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		8F3ABC6A8C60633E0965AEB9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		960EBA111CEA8472007B8171 /* ConnectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
+		9665FF941D3D8D77004A8112 /* GroupsSnippetsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsSnippetsTest.swift; sourceTree = "<group>"; };
 		9682B8C21CEA92B500EEA064 /* Authentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		96A9DFB21D3074A800560A64 /* Graph-iOS-Swift-SnippetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Graph-iOS-Swift-SnippetsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96A9DFB41D3074A800560A64 /* Graph_iOS_Swift_SnippetsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph_iOS_Swift_SnippetsTests.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 			children = (
 				96D11E841D341B6400E0A098 /* testAuthProvider.swift */,
 				96A9DFB41D3074A800560A64 /* Graph_iOS_Swift_SnippetsTests.swift */,
+				9665FF941D3D8D77004A8112 /* GroupsSnippetsTest.swift */,
 				96D11E881D34260500E0A098 /* UserSnippetsTest.swift */,
 				96D11E861D341BC700E0A098 /* testUserArgs.json */,
 				96A9DFB61D3074A800560A64 /* Info.plist */,
@@ -362,6 +365,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96D11E851D341B6400E0A098 /* testAuthProvider.swift in Sources */,
+				9665FF951D3D8D77004A8112 /* GroupsSnippetsTest.swift in Sources */,
 				96A9DFB51D3074A800560A64 /* Graph_iOS_Swift_SnippetsTests.swift in Sources */,
 				96D11E891D34260500E0A098 /* UserSnippetsTest.swift in Sources */,
 			);

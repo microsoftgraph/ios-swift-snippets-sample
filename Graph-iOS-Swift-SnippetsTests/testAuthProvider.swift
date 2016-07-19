@@ -14,6 +14,7 @@ class testAuthProvider: NSObject, MSAuthenticationProvider {
     
     var accessToken: String?
     var userEmail: String!
+    var domainName: String!
     
     let contentType           = "application/x-www-form-urlencoded"
     let grantType             = "password"
@@ -32,6 +33,7 @@ class testAuthProvider: NSObject, MSAuthenticationProvider {
         let jsonResult = try! NSJSONSerialization.JSONObjectWithData(jsonData, options: []) as! NSDictionary
         
         userEmail = jsonResult["test.username"] as! String
+        domainName = userEmail.componentsSeparatedByString("@")[1]
     }
     
     @objc func appendAuthenticationHeaders(request: NSMutableURLRequest!, completion completionHandler: MSAuthenticationCompletion!) {
