@@ -9,7 +9,7 @@ import Foundation
 
 struct ApplicationConstants {
     // You will set your application's clientId
-    static let clientId = "ENTER_CLIENT_ID"
+    static let clientId = "619a3897-5a78-4a84-b5a8-4bcd22100f29"
     
     // Set scopes
     static let scopes   = [ "https://graph.microsoft.com/User.Read",
@@ -21,8 +21,8 @@ struct ApplicationConstants {
                             "https://graph.microsoft.com/Files.ReadWrite"
 // Admin-only scopes. Uncomment these if you're running the sample with an admin work account.
 // You won't be able to sign in with a non-admin work account if you request these scopes.
-//                            "https://graph.microsoft.com/Directory.AccessAsUser.All",
-//                            "https://graph.microsoft.com/User.ReadWrite.All"
+                            , "https://graph.microsoft.com/Directory.AccessAsUser.All",
+                            "https://graph.microsoft.com/User.ReadWrite.All"
     ]
 }
 
