@@ -34,7 +34,7 @@ These snippets are simple and self-contained, and you can copy and paste them in
 This sample requires the following:  
 * [Xcode](https://developer.apple.com/xcode/downloads/) from Apple
 * Installation of [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)  as a dependency manager.
-* A Microsoft work or personal email account such as Office 365, or outlook.com, hotmail.com, etc. You can sign up for [an Office 365 Developer subscription](https://portal.office.com/Signup/Signup.aspx?OfferId=6881A1CB-F4EB-4db3-9F18-388898DAF510&DL=DEVELOPERPACK&ali=1#0) that includes the resources that you need to start building Office 365 apps.
+* A Microsoft work or personal email account such as Office 365, or outlook.com, hotmail.com, etc. You can sign up for [an Office 365 Developer subscription](https://aka.ms/devprogramsignup) that includes the resources that you need to start building Office 365 apps.
 * A client id from the registered app at [Microsoft Graph App Registration Portal](https://graph.microsoft.io/en-us/app-registration)
 * As stated above, to make authentication requests, an **MSAuthenticationProvider** must be provided which is capable of authenticating HTTPS requests with an appropriate OAuth 2.0 bearer token. 
 
@@ -114,6 +114,12 @@ You'll be able to perform several operations just using the scopes defined above
 
 To see what snippets can be run against an admin, organization, or personal accounts see files UserSnippets.swift and GroupsSnippets.swift under Graph-iOS-Swift-Snippets/Snippets inside project navigator. Each snippet description will detail the level of access.
 
+<a name="contributing"></a>
+## Contributing ##
+
+If you'd like to contribute to this sample, see [CONTRIBUTING.MD](/CONTRIBUTING.md).
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 <a name="questions"></a>
 ## Questions and comments
@@ -132,5 +138,3 @@ Your feedback is important to us. Connect with us on [Stack Overflow](http://sta
 
 ## Copyright
 Copyright (c) 2016 Microsoft. All rights reserved.
-
-
