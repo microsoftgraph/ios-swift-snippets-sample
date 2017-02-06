@@ -7,7 +7,7 @@
 * [Register and configure the app](#register)
 * [Build and debug](#build)
 * [Code of interest](#code-of-interest)
-* [Running the sample](#run)
+* [Running the sample](#running-the-sample)
 * [Questions and comments](#questions)
 * [Additional resources](#additional-resources)
 
@@ -32,14 +32,14 @@ These snippets are simple and self-contained, and you can copy and paste them in
 ## Prerequisites ##
 
 This sample requires the following:  
-* [Xcode](https://developer.apple.com/xcode/downloads/) from Apple
+* [Xcode](https://developer.apple.com/xcode/downloads/) version 7.3.1 from Apple 
 * Installation of [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)  as a dependency manager.
 * A Microsoft work or personal email account such as Office 365, or outlook.com, hotmail.com, etc. You can sign up for [an Office 365 Developer subscription](https://aka.ms/devprogramsignup) that includes the resources that you need to start building Office 365 apps.
 * A client id from the registered app at [Microsoft Graph App Registration Portal](https://graph.microsoft.io/en-us/app-registration)
 * As stated above, to make authentication requests, an **MSAuthenticationProvider** must be provided which is capable of authenticating HTTPS requests with an appropriate OAuth 2.0 bearer token. 
 
+>**Note:** The sample was tested on Xcode 7.3.1. This sample does not yet support Xcode 8 and iOS10, which uses the Swift 3.0 framework.
 
-      
 <a name="register"></a>
 ##Register and configure the app
 
