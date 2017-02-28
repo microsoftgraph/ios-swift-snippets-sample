@@ -36,7 +36,7 @@
 * 安装 [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html) 作为依存关系管理器。
 * Microsoft 工作或个人电子邮件帐户，例如 Office 365 或 outlook.com、hotmail.com 等。你可以注册 [Office 365 开发人员订阅](https://aka.ms/devprogramsignup)，其中包含开始构建 Office 365 应用所需的资源。
 * 
-  [Microsoft Graph 应用注册门户](https://graph.microsoft.io/en-us/app-registration) 中已注册应用的客户端 ID
+  [Microsoft Graph 应用注册门户](https://graph.microsoft.io/zh-cn/app-registration) 中已注册应用的客户端 ID
 * 如上所述，若要生成身份验证请求，必须提供 **MSAuthenticationProvider**（它能够使用适当的 OAuth 2.0 持有者令牌对 HTTPS 请求进行身份验证）。 
 
 >**注意：**在 Xcode 7.3.1 上测试此示例。此示例使用 Swift 3.0 框架，尚不支持 Xcode 8 和 iOS10。

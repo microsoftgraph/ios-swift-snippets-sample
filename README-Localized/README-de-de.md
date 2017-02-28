@@ -35,7 +35,7 @@ Für dieses Beispiel ist Folgendes erforderlich:
 * [Xcode](https://developer.apple.com/xcode/downloads/) Version 7.3.1 von Apple 
 * Installation von [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html) als ein Abhängigkeits-Manager.
 * Ein geschäftliches oder persönliches Microsoft-E-Mail-Konto, z. B. Office 365 oder outlook.com, hotmail.com usw. Sie können sich für ein [Office 365-Entwicklerabonnement](https://aka.ms/devprogramsignup) registrieren. Dieses umfasst die Ressourcen, die Sie zum Erstellen von Office 365-Apps benötigen.
-* Eine Client-ID aus der registrierten App unter dem [App-Registrierungsportal von Microsoft Graph](https://graph.microsoft.io/en-us/app-registration)
+* Eine Client-ID aus der registrierten App unter dem [App-Registrierungsportal von Microsoft Graph](https://graph.microsoft.io/de-de/app-registration)
 * Wie zuvor erwähnt, muss ein **MSAuthenticationProvider** bereitgestellt werden, der HTTPS-Anforderungen mit einem entsprechenden OAuth 2.0-Bearertoken authentifizieren kann, um Anforderungen auszuführen. 
 
 >**Hinweis:** Das Beispiel wurde auf Xcode 7.3.1 getestet. In diesem Beispiel werden Xcode 8 und iOS10 nicht unterstützt, da hier das Swift 3.0-Framework verwendet wird.

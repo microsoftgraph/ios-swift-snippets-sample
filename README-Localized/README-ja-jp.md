@@ -36,7 +36,7 @@
 * 依存関係マネージャーとしての [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html) のインストール。
 * Office 365、outlook.com、hotmail.com などの、Microsoft の職場または個人用のメール アカウント。Office 365 アプリのビルドを開始するために必要なリソースを含む、[Office 365 Developer サブスクリプション](https://aka.ms/devprogramsignup)にサインアップできます。
 * 
-  [Microsoft Graph アプリ登録ポータル](https://graph.microsoft.io/en-us/app-registration) で登録済みのアプリのクライアント ID
+  [Microsoft Graph アプリ登録ポータル](https://graph.microsoft.io/ja-jp/app-registration) で登録済みのアプリのクライアント ID
 * 前述のように、認証要求を実行するには、適切な OAuth 2.0 ベアラー トークンを使用して HTTPS 要求を認証できる **MSAuthenticationProvider** を指定する必要があります。 
 
 >**注:**サンプルは Xcode 7.3.1 でテストされました。このサンプルは、Xcode 8 および iOS10 (Swift 3.0 フレームワークを使用する) をまだサポートしていません。
