@@ -14,9 +14,9 @@ struct CreateUser: Snippet {
     let name = "Create user"
     let needAdminAccess: Bool = true
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
-        let userId = NSProcessInfo.processInfo().globallyUniqueString
+        let userId = ProcessInfo.processInfo.globallyUniqueString
         let domainName = "ENTER_DOMAIN_NAME"
         let upn = userId + "@" + domainName
         
@@ -30,18 +30,18 @@ struct CreateUser: Snippet {
         newUser.mailNickname = userId
         newUser.userPrincipalName = upn
         
-        Snippets.graphClient.users().request().addUser(newUser) {
-            (createdUser: MSGraphUser?, error: NSError?) in
+        Snippets.graphClient.users().request().add(newUser) {
+            (createdUser: MSGraphUser?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.failure(error: MSGraphError.nsErrorType(error: nsError as NSError)))
                 return
             }
             else {
                 guard let displayName = createdUser?.displayName else {
-                    completion(result: .Success(displayText: "User created - no user display name"))
+                    completion(.success(displayText: "User created - no user display name"))
                     return
                 }
-                completion(result: .Success(displayText: "User created: \(displayName)"))
+                completion(.success(displayText: "User created: \(displayName)"))
             }
         }
     }
@@ -53,15 +53,15 @@ struct GetUserGroups: Snippet {
     let name = "Get user groups"
     let needAdminAccess: Bool = true
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         Snippets.graphClient.me().memberOf().request().getWithCompletion {
             (userGroupCollection: MSCollection?,
             nextRequest: MSGraphUserMemberOfCollectionWithReferencesRequest?,
-            error: NSError?) in
+            error: Error?) in
             
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.failure(error: MSGraphError.nsErrorType(error: nsError as NSError)))
                 return
             }
             
@@ -70,7 +70,7 @@ struct GetUserGroups: Snippet {
             if let userGroups = userGroupCollection {
                 for userGroup: MSGraphDirectoryObject in userGroups.value as! [MSGraphDirectoryObject] {
                     guard let name = userGroup.dictionaryFromItem()["displayName"] else {
-                        completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Display name not found")))
+                        completion(.failure(error: MSGraphError.unexpectecError(errorString: "Display name not found")))
                         return
                     }
                     displayString += "\(name)\n"
@@ -80,7 +80,7 @@ struct GetUserGroups: Snippet {
                 displayString += "Next request available for more groups"
             }
             
-            completion(result: .Success(displayText: displayString))
+            completion(.success(displayText: displayString))
         }
     }
 }
@@ -91,11 +91,11 @@ struct GetAllGroups: Snippet {
     let name = "Get all groups"
     let needAdminAccess: Bool = true
     
-    func execute(with completion: (result: Result) -> Void) {
-        Snippets.graphClient.groups().request().getWithCompletion { (allGroupsCollection: MSCollection?, nextRequest: MSGraphGroupsCollectionRequest?, error: NSError?) in
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
+        Snippets.graphClient.groups().request().getWithCompletion { (allGroupsCollection: MSCollection?, nextRequest: MSGraphGroupsCollectionRequest?, error: Error?) in
             
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.failure(error: MSGraphError.nsErrorType(error: nsError as NSError)))
                 return
             }
             
@@ -105,7 +105,7 @@ struct GetAllGroups: Snippet {
                 for group: MSGraphDirectoryObject in allGroups.value as! [MSGraphDirectoryObject] {
                     
                     guard let name = group.dictionaryFromItem()["displayName"] else {
-                        completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Display name not found")))
+                        completion(.failure(error: MSGraphError.unexpectecError(errorString: "Display name not found")))
                         return
                     }
                     displayString += "\(name)\n "
@@ -116,7 +116,7 @@ struct GetAllGroups: Snippet {
             }
             
             
-            completion(result: .Success(displayText: displayString))
+            completion( .success(displayText: displayString))
             
         }
     }
@@ -128,19 +128,19 @@ struct GetSingleGroup: Snippet {
     let name = "Get single group"
     let needAdminAccess: Bool = true
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         // Enter a valid group ID,
         // This can be found from getting list of groups or creating a new group
         let groupId: String = "ENTER_GROUP_ID"
         
-        Snippets.graphClient.groups(groupId).request().getWithCompletion({ (singleGroup: MSGraphGroup?, error: NSError?) in
+        Snippets.graphClient.groups(groupId).request().getWithCompletion({ (singleGroup: MSGraphGroup?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.failure(error: MSGraphError.nsErrorType(error: nsError as NSError)))
                 return
             }
             else {
-                completion(result: .Success(displayText: "Retrieved group: \(singleGroup!)"))
+                completion(.success(displayText: "Retrieved group: \(singleGroup!)"))
             }
         })
     }
@@ -152,16 +152,16 @@ struct GetMembers: Snippet {
     let name = "Get members"
     let needAdminAccess: Bool = true
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         // Enter a valid group ID,
         // This can be found from getting list of groups or creating a new group
         let groupId: String = "ENTER_GROUP_ID"
        
         Snippets.graphClient.groups(groupId).members().request().getWithCompletion({
-            (memberCollection: MSCollection?, nextRequest: MSGraphGroupMembersCollectionWithReferencesRequest?, error: NSError?) in
+            (memberCollection: MSCollection?, nextRequest: MSGraphGroupMembersCollectionWithReferencesRequest?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.failure(error: MSGraphError.nsErrorType(error: nsError as NSError)))
                 return
             }
             else {
@@ -169,7 +169,7 @@ struct GetMembers: Snippet {
                 
                 for member: MSGraphDirectoryObject in memberCollection!.value as! [MSGraphDirectoryObject] {
                     guard let name = member.dictionaryFromItem()["displayName"] else {
-                        completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Display name not found")))
+                        completion(.failure(error: MSGraphError.unexpectecError(errorString: "Display name not found")))
                         return
                     }
                     displayString += name as! String + "\n"
@@ -179,7 +179,7 @@ struct GetMembers: Snippet {
                     displayString += "Next request available for more members"
                 }
                 
-                completion(result: .Success(displayText: "List of members:\n\(displayString)"))
+                completion(.success(displayText: "List of members:\n\(displayString)"))
             }
         })
     }
@@ -192,16 +192,16 @@ struct GetOwners: Snippet {
     let name = "Get owners"
     let needAdminAccess: Bool = true
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         // Enter a valid group ID,
         // This can be found from getting list of groups or creating a new group
         let groupId: String = "ENTER_GROUP_ID" //"047dc3cc-88ce-4f55-82f3-f8fe8c79f393"
         
         Snippets.graphClient.groups(groupId).owners().request().getWithCompletion({
-            (memberCollection: MSCollection?, nextRequest: MSGraphGroupOwnersCollectionWithReferencesRequest?, error: NSError?) in
+            (memberCollection: MSCollection?, nextRequest: MSGraphGroupOwnersCollectionWithReferencesRequest?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.failure(error: MSGraphError.nsErrorType(error: nsError as NSError)))
                 return
             }
             else {
@@ -209,7 +209,7 @@ struct GetOwners: Snippet {
                 
                 for member: MSGraphDirectoryObject in memberCollection!.value as! [MSGraphDirectoryObject] {
                     guard let name = member.dictionaryFromItem()["displayName"] else {
-                        completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Display name not found")))
+                        completion(.failure(error: MSGraphError.unexpectecError(errorString: "Display name not found")))
                         return
                     }
                     displayString += name as! String + "\n"
@@ -220,7 +220,7 @@ struct GetOwners: Snippet {
                 }
                 
                 
-                completion(result: .Success(displayText: "List of owners:\n\(displayString)"))
+                completion(.success(displayText: "List of owners:\n\(displayString)"))
             }
         })
     }
@@ -232,22 +232,22 @@ struct CreateGroup: Snippet {
     let name = "Create group"
     let needAdminAccess: Bool = true
   
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         let group = Snippets.createGroupObject()
         
-        Snippets.graphClient.groups().request().addGroup(group) {
-            (addedGroup: MSGraphGroup?, error: NSError?) in
+        Snippets.graphClient.groups().request().add(group) {
+            (addedGroup: MSGraphGroup?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.failure(error: MSGraphError.nsErrorType(error: nsError as NSError)))
                 return
             }
             else {
                 guard let _ = addedGroup else {
-                    completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Group ID not returned")))
+                    completion(.failure(error: MSGraphError.unexpectecError(errorString: "Group ID not returned")))
                     return
                 }
                 print("id", addedGroup!.entityId)
-                completion(result: .Success(displayText: "Group \(addedGroup!.displayName) was added"))
+                completion(.success(displayText: "Group \(addedGroup!.displayName) was added"))
                 
             }
         }
@@ -259,34 +259,34 @@ struct CreateGroup: Snippet {
 struct UpdateGroup: Snippet {
     let name = "Update group"
     let needAdminAccess: Bool = true
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         // Enter a valid group ID,
         // This can be found from getting list of groups or creating a new group
         let groupId: String = "070fcdec-b187-498e-8c1e-663e3e7fb418" //"047dc3cc-88ce-4f55-82f3-f8fe8c79f393"
     
-        Snippets.graphClient.groups(groupId).request().getWithCompletion { (group: MSGraphGroup?, error: NSError?) in
+        Snippets.graphClient.groups(groupId).request().getWithCompletion { (group: MSGraphGroup?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.failure(error: MSGraphError.nsErrorType(error: nsError as NSError)))
                 return
             }
             else {
                 guard let validGroup = group else {
-                    completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Group ID not returned")))
+                    completion( .failure(error: MSGraphError.unexpectecError(errorString: "Group ID not returned")))
                     return
                 }
                 
                 validGroup.displayName = "Updated group display name"
                 Snippets.graphClient.groups(validGroup.entityId).request().update(validGroup, withCompletion: {
-                    (group: MSGraphGroup?, error: NSError?) in
+                    (group: MSGraphGroup?, error: Error?) in
                     
                     print(group, error)
                     if let nsError = error {
-                        completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                        completion(.failure(error: MSGraphError.nsErrorType(error: nsError as NSError)))
                         return
                     }
                     else {
-                        completion(result: .Success(displayText: "Group \(group!.displayName) updated"))
+                        completion( .success(displayText: "Group \(group!.displayName) updated"))
                     }
                 })
             }
@@ -300,19 +300,19 @@ struct DeleteGroup: Snippet {
     let name = "Delete group"
     let needAdminAccess: Bool = true
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         // Enter a valid group ID,
         // This can be found from getting list of groups or creating a new group
         let groupId: String = "ENTER_GROUP_ID" //"047dc3cc-88ce-4f55-82f3-f8fe8c79f393"
     
-        Snippets.graphClient.groups(groupId).request().deleteWithCompletion({ (error: NSError?) in
+        Snippets.graphClient.groups(groupId).request().delete(completion: { (error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion( .failure(error: MSGraphError.nsErrorType(error: nsError as NSError)))
                 return
             }
             else {
-                completion(result: .Success(displayText: "Group has been deleted"))
+                completion(.success(displayText: "Group has been deleted"))
             }
         })
     }

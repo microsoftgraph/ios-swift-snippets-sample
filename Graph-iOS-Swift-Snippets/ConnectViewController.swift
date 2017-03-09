@@ -16,7 +16,7 @@ class ConnectViewController: UIViewController, UISplitViewControllerDelegate {
     
     // MARK: - Split view
    
-    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController:UIViewController, ontoPrimaryViewController primaryViewController:UIViewController) -> Bool {
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController:UIViewController, onto primaryViewController:UIViewController) -> Bool {
         guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
         guard let topAsDetailController = secondaryAsNavController.topViewController as? DetailViewController else { return false }
         if topAsDetailController.snippet == nil {
@@ -27,17 +27,17 @@ class ConnectViewController: UIViewController, UISplitViewControllerDelegate {
     }
 
     
-    @IBAction func connectToGraph(sender: AnyObject) {
+    @IBAction func connectToGraph(_ sender: AnyObject) {
         authenticate()
     }
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showSnippets" {
-            let splitViewController = segue.destinationViewController as! UISplitViewController
+            let splitViewController = segue.destination as! UISplitViewController
             
             let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
-            navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
+            navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
             
             let navController = splitViewController.viewControllers.first as! UINavigationController
             print(navController)
@@ -66,16 +66,16 @@ private extension ConnectViewController {
             
             if let graphError = error {
                 switch graphError {
-                case .NSErrorType(let nsError):
+                case .nsErrorType(let nsError):
                     print("Error:", nsError.localizedDescription)
                     self.showError(message: "Check print log for error details")
-                case .UnexpectecError(let errorString):
+                case .unexpectecError(let errorString):
                     print("Unexpected error:", errorString)
                     self.showError(message: "Check print log for error details")
                 }
             }
             else {
-                self.performSegueWithIdentifier("showSnippets", sender: nil)
+                self.performSegue(withIdentifier: "showSnippets", sender: nil)
             }
         }
     }
@@ -84,25 +84,25 @@ private extension ConnectViewController {
 
 // MARK: UI Helper
 private extension ConnectViewController {
-    func loadingUI(show show: Bool) {
+    func loadingUI(show: Bool) {
         if show {
             self.activityIndicator.startAnimating()
-            self.connectButton.setTitle("Connecting...", forState: .Normal)
-            self.connectButton.enabled = false;
+            self.connectButton.setTitle("Connecting...", for: UIControlState())
+            self.connectButton.isEnabled = false;
         }
         else {
             self.activityIndicator.stopAnimating()
-            self.connectButton.setTitle("Connect", forState: .Normal)
-            self.connectButton.enabled = true;
+            self.connectButton.setTitle("Connect", for: UIControlState())
+            self.connectButton.isEnabled = true;
         }
     }
     
-    func showError(message message:String) {
-        dispatch_async(dispatch_get_main_queue(),{
-            let alertControl = UIAlertController(title: "Error", message: message, preferredStyle: .Alert)
-            alertControl.addAction(UIAlertAction(title: "Close", style: .Default, handler: nil))
+    func showError(message:String) {
+        DispatchQueue.main.async(execute: {
+            let alertControl = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            alertControl.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
             
-            self.presentViewController(alertControl, animated: true, completion: nil)
+            self.present(alertControl, animated: true, completion: nil)
         })
     }
 }

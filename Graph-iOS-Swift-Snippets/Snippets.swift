@@ -8,21 +8,21 @@ import Foundation
 
 // MARK: - Enum Result
 enum Result {
-    case Success(displayText: String?)
-    case SuccessDownloadImage(displayImage: UIImage?)
-    case Failure(error: MSGraphError)
+    case success(displayText: String?)
+    case successDownloadImage(displayImage: UIImage?)
+    case failure(error: MSGraphError)
 }
 
 // MARK: - Protocol Snippet
 protocol Snippet {
-    func execute(with completion:(result: Result) -> Void)
+    func execute(with completion:(_ result: Result) -> Void)
     
     var needAdminAccess: Bool { get }
     var name: String { get }
 }
 
 extension Snippet {
-    func execute(with completion:(result: Result) -> Void) {
+    func execute(with completion:(_ result: Result) -> Void) {
         assert(true, "Empty execution body")
     }
 }

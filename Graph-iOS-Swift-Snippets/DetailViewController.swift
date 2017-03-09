@@ -29,7 +29,7 @@ class DetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         if let _ = snippet {
@@ -38,13 +38,13 @@ class DetailViewController: UIViewController {
         
     }
     
-    @IBAction func runSnippet(sender: AnyObject) {
-        UIView.animateWithDuration(0.35,
+    @IBAction func runSnippet(_ sender: AnyObject) {
+        UIView.animate(withDuration: 0.35,
                                    animations: {
-                                    self.activityIndicatorView.hidden = true
-            }) { (finished) in
+                                    self.activityIndicatorView.isHidden = true
+            }, completion: { (finished) in
                 self.activityIndicatorView.stopAnimating()
-        }
+        }) 
     }
 
 }
@@ -56,23 +56,23 @@ extension DetailViewController {
         guard let _ = snippet else { return }
         self.snippet!.execute { (result: Result) in
             switch result {
-            case .Failure(let error):
+            case .failure(let error):
                 var displayText: String = "Failed\n\n"
                 switch error {
-                case .NSErrorType(let nsError):
+                case .nsErrorType(let nsError):
                     displayText = nsError.localizedDescription
                     
-                    for (key, value) in nsError.userInfo.enumerate() {
+                    for (key, value) in nsError.userInfo.enumerated() {
                         displayText += "\n\(key): \(value)"
                     }
                     
                     break;
-                case.UnexpectecError(let errorString):
+                case.unexpectecError(let errorString):
                     displayText = errorString
                     break;
                 }
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     let result = UILabel()
                     result.numberOfLines = 0
                     result.text = displayText
@@ -84,9 +84,9 @@ extension DetailViewController {
                 })
 
                 break
-            case .Success(let displayText):
+            case .success(let displayText):
                 if let text = displayText {
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         let result = UILabel()
                         result.numberOfLines = 0
                         result.text = "Success\n\n\(text)"
@@ -97,8 +97,8 @@ extension DetailViewController {
                 }
                 break
                 
-            case .SuccessDownloadImage(let displayImage):
-                dispatch_async(dispatch_get_main_queue(), {
+            case .successDownloadImage(let displayImage):
+                DispatchQueue.main.async(execute: {
                     let imageView = UIImageView(image: displayImage)
                     
                     self.resultStackView.addArrangedSubview(imageView)
@@ -115,9 +115,9 @@ extension DetailViewController {
 
     func configureView() {
         if let label = snippetNameLabel,
-            _ = self.snippet{
+            let _ = self.snippet{
             label.text = self.snippet!.name
-            accessLevelLabel.hidden = !(self.snippet!.needAdminAccess)
+            accessLevelLabel.isHidden = !(self.snippet!.needAdminAccess)
         }
         
         guard let _ = snippet else { return }
@@ -135,11 +135,11 @@ extension DetailViewController {
     func hideActivityIndicator() {
         self.activityIndicatorView.stopAnimating()
         
-        UIView.animateWithDuration(0.35,
-                                   animations: { self.activityIndicatorView.hidden = true })
-        { (finished) in
+        UIView.animate(withDuration: 0.35,
+                                   animations: { self.activityIndicatorView.isHidden = true }, completion: { (finished) in
             self.activityIndicatorView.stopAnimating()
-        }
+        })
+        
     }
 }
 
