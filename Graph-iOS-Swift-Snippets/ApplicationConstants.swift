@@ -9,7 +9,7 @@ import Foundation
 
 struct ApplicationConstants {
     // You will set your application's clientId
-    static let clientId = "619a3897-5a78-4a84-b5a8-4bcd22100f29"
+    static let clientId = "b3aff520-6f80-4bce-a55f-084375d4f8c4"
     
     // Set scopes
     static let scopes   = [ "https://graph.microsoft.com/User.Read",
