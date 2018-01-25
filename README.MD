@@ -12,7 +12,7 @@
 * [Additional resources](#additional-resources)
 
 <a name="introduction"></a>
-##Introduction
+## Introduction
 
 This sample contains a repository of code snippets that show how to use the Microsoft Graph SDK to send email, manage groups, and perform other activities with Office 365 data. It uses the [Microsoft Graph SDK for iOS](https://github.com/microsoftgraph/msgraph-sdk-ios) to work with data returned by Microsoft Graph.
 
@@ -41,7 +41,7 @@ This sample requires the following:
 >**Note:** The sample was tested on Xcode 7.3.1. This sample does not yet support Xcode 8 and iOS10, which uses the Swift 3.0 framework.
 
 <a name="register"></a>
-##Register and configure the app
+## Register and configure the app
 
 1. Sign into the [App Registration Portal](https://apps.dev.microsoft.com/) using either your personal or work or school account.  
 2. Select **Add an app**.  
