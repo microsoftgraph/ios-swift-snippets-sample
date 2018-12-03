@@ -30,6 +30,12 @@ DEPENDENCIES:
   - MSGraphSDK
   - MSGraphSDK-NXOAuth2Adapter
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - MSGraphSDK
+    - MSGraphSDK-NXOAuth2Adapter
+    - NXOAuth2Client
+
 SPEC CHECKSUMS:
   MSGraphSDK: 3c43eb632ca969593f1bdd5612b573e436bd3283
   MSGraphSDK-NXOAuth2Adapter: 2b6db8cc771d4f4f269091bc4280c405b3c3e4a4
@@ -37,4 +43,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: d372dda2aa7d7fbae0bf82dd6cb6e63351f23ae2
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.5.3

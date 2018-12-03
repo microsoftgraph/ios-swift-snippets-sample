@@ -27,7 +27,7 @@ struct ApplicationConstants {
 }
 
 
-enum MSGraphError: ErrorType {
+enum MSGraphError: Error {
     case NSErrorType(error: NSError)
     case UnexpectecError(errorString: String)
 }

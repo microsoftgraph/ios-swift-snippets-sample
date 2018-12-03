@@ -32,12 +32,12 @@ class ConnectViewController: UIViewController, UISplitViewControllerDelegate {
     }
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showSnippets" {
-            let splitViewController = segue.destinationViewController as! UISplitViewController
+            let splitViewController = segue.destination as! UISplitViewController
             
             let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
-            navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
+            navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
             
             let navController = splitViewController.viewControllers.first as! UINavigationController
             print(navController)
@@ -75,7 +75,7 @@ private extension ConnectViewController {
                 }
             }
             else {
-                self.performSegueWithIdentifier("showSnippets", sender: nil)
+                self.performSegue(withIdentifier: "showSnippets", sender: nil)
             }
         }
     }
@@ -84,25 +84,25 @@ private extension ConnectViewController {
 
 // MARK: UI Helper
 private extension ConnectViewController {
-    func loadingUI(show show: Bool) {
+    func loadingUI(show: Bool) {
         if show {
             self.activityIndicator.startAnimating()
-            self.connectButton.setTitle("Connecting...", forState: .Normal)
-            self.connectButton.enabled = false;
+            self.connectButton.setTitle("Connecting...", for: .normal)
+            self.connectButton.isEnabled = false;
         }
         else {
             self.activityIndicator.stopAnimating()
-            self.connectButton.setTitle("Connect", forState: .Normal)
-            self.connectButton.enabled = true;
+            self.connectButton.setTitle("Connect", for: .normal)
+            self.connectButton.isEnabled = true;
         }
     }
     
-    func showError(message message:String) {
-        dispatch_async(dispatch_get_main_queue(),{
-            let alertControl = UIAlertController(title: "Error", message: message, preferredStyle: .Alert)
-            alertControl.addAction(UIAlertAction(title: "Close", style: .Default, handler: nil))
+    func showError(message:String) {
+        DispatchQueue.main.async(execute: {
+            let alertControl = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            alertControl.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
             
-            self.presentViewController(alertControl, animated: true, completion: nil)
+            self.present(alertControl, animated: true, completion: nil)
         })
     }
 }

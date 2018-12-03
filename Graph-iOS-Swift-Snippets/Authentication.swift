@@ -9,7 +9,7 @@ struct Authentication {
     var authenticationProvider: NXOAuth2AuthenticationProvider?
         {
         get {
-            return NXOAuth2AuthenticationProvider.sharedAuthProvider()
+            return NXOAuth2AuthenticationProvider.sharedAuth()
         }
     }
     
@@ -18,20 +18,20 @@ struct Authentication {
 extension Authentication {
     func connectToGraph(withClientId clientId: String,
                                      scopes: [String],
-                                     completion:(error: MSGraphError?) -> Void) {
+                                     completion:@escaping (_ error: MSGraphError?) -> Void) {
         NXOAuth2AuthenticationProvider.setClientId(clientId, scopes: scopes)
         
-        if NXOAuth2AuthenticationProvider.sharedAuthProvider().loginSilent() == true {
-            completion(error: nil)
+        if NXOAuth2AuthenticationProvider.sharedAuth().loginSilent() == true {
+            completion(nil)
         }
         else {
-            NXOAuth2AuthenticationProvider.sharedAuthProvider()
-                .loginWithViewController(nil) { (error: NSError?) in
+            NXOAuth2AuthenticationProvider.sharedAuth()
+                .login(with: nil) { (error: Error?) in
                     if let nserror = error {
-                        completion(error: MSGraphError.NSErrorType(error: nserror))
+                        completion(MSGraphError.NSErrorType(error: nserror as NSError))
                     }
                     else {
-                        completion(error: nil)
+                        completion(nil)
                     }
             }
         }
@@ -39,7 +39,7 @@ extension Authentication {
     }
     
     func disconnect() {
-        NXOAuth2AuthenticationProvider.sharedAuthProvider().logout()
+        NXOAuth2AuthenticationProvider.sharedAuth().logout()
     }
 
 }

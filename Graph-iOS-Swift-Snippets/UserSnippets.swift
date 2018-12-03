@@ -14,18 +14,18 @@ struct GetMe: Snippet {
     let name = "Get me"
     let needAdminAccess: Bool = false
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         Snippets.graphClient.me().request().getWithCompletion {
-            (user: MSGraphUser?, error: NSError?) in
+            (user: MSGraphUser?, error: Error?) in
             
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
-                let displayString = "Retrieval of user account information succeeded for \(user!.displayName)"
-                completion(result: .Success(displayText: displayString))
+                let displayString = "Retrieval of user account information succeeded for \(String(describing: user!.displayName))"
+                completion(.Success(displayText: displayString))
             }
-        }
+            }
     }
 }
 
@@ -37,12 +37,12 @@ struct GetUsers: Snippet {
     let name = "Get users"
     let needAdminAccess: Bool = false
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         Snippets.graphClient.users().request().getWithCompletion {
-            (userCollection: MSCollection?, nextRequest: MSGraphUsersCollectionRequest?, error: NSError?) in
+            (userCollection: MSCollection?, nextRequest: MSGraphUsersCollectionRequest?, error: Error?) in
             
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
                 var displayString = "List of users:\n"
@@ -56,7 +56,7 @@ struct GetUsers: Snippet {
                 if let _ = nextRequest {
                     displayString += "Next request available for more users"
                 }
-                completion(result: .Success(displayText: displayString))
+                completion(.Success(displayText: displayString))
             }
         }
     }
@@ -69,11 +69,11 @@ struct GetDrive: Snippet {
     let name = "Get drive"
     let needAdminAccess: Bool = false
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         Snippets.graphClient.me().drive().request().getWithCompletion {
-            (drive: MSGraphDrive?, error: NSError?) in
+            (drive: MSGraphDrive?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
                 var displayString = "Drive information:\n"
@@ -81,7 +81,7 @@ struct GetDrive: Snippet {
                     displayString += "Drive type is " + userDrive.driveType + "\n"
                     displayString += "Total Quote is " + String(userDrive.quota.total)
                 }
-                completion(result: .Success(displayText: displayString))
+                completion(.Success(displayText: displayString))
             }
         }
     }
@@ -95,11 +95,11 @@ struct GetEvents: Snippet {
     let name = "Get events"
     let needAdminAccess: Bool = false
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         Snippets.graphClient.me().events().request().getWithCompletion {
-            (eventCollection: MSCollection?, nextRequest: MSGraphUserEventsCollectionRequest?, error: NSError?) in
+            (eventCollection: MSCollection?, nextRequest: MSGraphUserEventsCollectionRequest?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
                 var displayString = "List of events (subjects):\n"
@@ -113,7 +113,7 @@ struct GetEvents: Snippet {
                     displayString += "Next request available for more users"
                 }
                 
-                completion(result: .Success(displayText: displayString))
+                completion(.Success(displayText: displayString))
             }
         }
     }
@@ -126,18 +126,18 @@ struct CreateEvent: Snippet {
     let name = "Create event"
     let needAdminAccess: Bool = false
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         let event = Snippets.createEventObject(isSeries: false)
         
-        Snippets.graphClient.me().calendar().events().request().addEvent(event) {
-            (event: MSGraphEvent?, error: NSError?) in
+        Snippets.graphClient.me().calendar().events().request().add(event) {
+            (event: MSGraphEvent?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
-                let displayString = "Event created with id \(event!.entityId)"
-                completion(result: .Success(displayText: displayString))
+                let displayString = "Event created with id \(event!.entityId!)"
+                completion(.Success(displayText: displayString))
             }
         }
     }
@@ -150,32 +150,32 @@ struct UpdateEvent: Snippet {
     let name = "Update event"
     let needAdminAccess: Bool = false
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         // Enter a valid event id
         let eventId = "ENTER_VALID_EVENT_ID"
         
         // Get an event and then update
         Snippets.graphClient.me().events(eventId).request().getWithCompletion {
-            (event: MSGraphEvent?, error: NSError?) in
+            (event: MSGraphEvent?, error: Error?) in
             
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
                 guard let validEvent = event else {
-                    completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Event ID not returned")))
+                    completion(.Failure(error: MSGraphError.UnexpectecError(errorString: "Event ID not returned")))
                     return
                 }
                 validEvent.subject = "New Name"
                 Snippets.graphClient.me().events(validEvent.entityId).request().update(validEvent, withCompletion: {
-                    (updatedEvent: MSGraphEvent?, error: NSError?) in
+                    (updatedEvent: MSGraphEvent?, error: Error?) in
                     if let nsError = error {
-                        completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                        completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
                     }
                     else {
                         let displayString = "Event updated with a new subject"
-                        completion(result: .Success(displayText: displayString))
+                        completion(.Success(displayText: displayString))
                     }
                 })
             }
@@ -190,18 +190,18 @@ struct DeleteEevnt: Snippet {
     let name = "Delete event"
     let needAdminAccess: Bool = false
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         // Enter a valid event id
         let eventId = "ENTER_VALID_EVENT_ID"
         
-        Snippets.graphClient.me().events(eventId).request().deleteWithCompletion({
-            (error: NSError?) in
+        Snippets.graphClient.me().events(eventId).request().delete(completion: {
+            (error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
-                completion(result: .Success(displayText: "Deleted calendar event id: \(eventId)"))
+                completion(.Success(displayText: "Deleted calendar event id: \(eventId)"))
             }
         })
     }
@@ -214,11 +214,11 @@ struct GetMessages: Snippet {
     let name = "Get messages"
     let needAdminAccess: Bool = false
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         Snippets.graphClient.me().messages().request().getWithCompletion {
-            (messageCollection: MSCollection?, nextRequest: MSGraphUserMessagesCollectionRequest?, error: NSError?) in
+            (messageCollection: MSCollection?, nextRequest: MSGraphUserMessagesCollectionRequest?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
                 var displayString = "List of messages:\n"
@@ -233,7 +233,7 @@ struct GetMessages: Snippet {
                     displayString += "Next request available for more messages"
                 }
                 
-                completion(result: .Success(displayText: displayString))
+                completion(.Success(displayText: displayString))
             }
         }
     }
@@ -245,7 +245,7 @@ struct GetMessages: Snippet {
 struct SendMessage: Snippet {
     let name = "Send mail"
     let needAdminAccess: Bool = false
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         // ENTER EMAIL ADDRESS
         let recipientEmailAddress = "ENTER_EMAIL_ADDRESS"
@@ -276,13 +276,13 @@ struct SendMessage: Snippet {
         // ===================================================================
         // Send message
         // ===================================================================
-        let mailRequest = Snippets.graphClient.me().sendMailWithMessage(message, saveToSentItems: true).request()
-        mailRequest.executeWithCompletion { (response: [NSObject : AnyObject]?, error: NSError?) in
+        let mailRequest = Snippets.graphClient.me().sendMail(with: message, saveToSentItems: true).request()
+        mailRequest?.execute { (response: [AnyHashable : Any]? , error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
-                completion(result: .Success(displayText: "Message sent"))
+                completion(.Success(displayText: "Message sent"))
             }
         }
         
@@ -296,7 +296,7 @@ struct SendMessage: Snippet {
 struct SendMessageHTML: Snippet {
     let name = "Send HTML mail"
     let needAdminAccess: Bool = false
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         // ENTER EMAIL ADDRESS
         let recipientEmailAddress = "ENTER_EMAIL_ADDRESS"
@@ -321,23 +321,24 @@ struct SendMessageHTML: Snippet {
         let messageBody = MSGraphItemBody()
         messageBody.contentType = MSGraphBodyType.html()
         
-        guard let emailBodyFilePath = NSBundle.mainBundle().pathForResource("EmailBody", ofType: "html") else {
-            completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "EmailBody.html not found in resources")))
+        guard let emailBodyFilePath = Bundle.main.path(forResource: "EmailBody", ofType: "html") else {
+            completion(.Failure(error: MSGraphError.UnexpectecError(errorString: "EmailBody.html not found in resources")))
             return
         }
-        messageBody.content = try! String(contentsOfFile: emailBodyFilePath, encoding: NSUTF8StringEncoding)
+        messageBody.content = try! String(contentsOfFile: emailBodyFilePath, encoding: String.Encoding.utf8)
         message.body = messageBody
         
         // ===================================================================
         // Send message
         // ===================================================================
-        let mailRequest = Snippets.graphClient.me().sendMailWithMessage(message, saveToSentItems: true).request()
-        mailRequest.executeWithCompletion { (response: [NSObject : AnyObject]?, error: NSError?) in
-            if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
-            }
-            else {
-                completion(result: .Success(displayText: "Message sent"))
+        if let mailRequest = Snippets.graphClient.me().sendMail(with: message, saveToSentItems: true).request() {
+            mailRequest.execute { (response: [AnyHashable : Any]?, error: Error?) in
+                if let nsError = error {
+                    completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
+                }
+                else {
+                    completion(.Success(displayText: "Message sent"))
+                }
             }
         }
     }
@@ -350,19 +351,19 @@ struct GetUserFiles: Snippet {
     let name = "Get user files"
     let needAdminAccess: Bool = false
     
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         Snippets.graphClient.me().drive().root().children().request().getWithCompletion {
-            (fileCollection: MSCollection?, nextRequest: MSGraphDriveItemChildrenCollectionRequest?, error: NSError?) in
+            (fileCollection: MSCollection?, nextRequest: MSGraphDriveItemChildrenCollectionRequest?, error: Error?) in
             
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
                 var displayString = "List of files: \n"
                 if let files = fileCollection {
                     
                     for file: MSGraphDriveItem in files.value as! [MSGraphDriveItem] {
-                        displayString += "\(file.name): \(file.size) \n"
+                        displayString += "\(String(describing: file.name)): \(file.size) \n"
                     }
                 }
                 
@@ -370,7 +371,7 @@ struct GetUserFiles: Snippet {
                     displayString += "Next request available for more files"
                 }
                 
-                completion(result: .Success(displayText: displayString))
+                completion(.Success(displayText: displayString))
             }
         }
     }
@@ -383,16 +384,16 @@ struct GetUserFiles: Snippet {
 struct CreateTextFile: Snippet {
     let name = "Create text file"
     let needAdminAccess: Bool = false
-    func execute(with completion: (result: Result) -> Void) {
-        let uploadData = "Test".dataUsingEncoding(NSUTF8StringEncoding)
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
+        let uploadData = "Test".data(using: String.Encoding.utf8)
         
-        Snippets.graphClient.me().drive().root().itemByPath("Test Folder/testTextfile.text").contentRequest().uploadFromData(uploadData) {
-            (item: MSGraphDriveItem?, error: NSError?) in
+        Snippets.graphClient.me().drive().root().item(byPath: "Test Folder/testTextfile.text").contentRequest().upload(from: uploadData) {
+            (item: MSGraphDriveItem?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
-                completion(result: .Success(displayText: "File created at Test Folder/testTextfile.text"))
+                completion(.Success(displayText: "File created at Test Folder/testTextfile.text"))
             }
         }
     }
@@ -404,17 +405,17 @@ struct CreateTextFile: Snippet {
 struct UploadFile: Snippet {
     let name = "Upload image file"
     let needAdminAccess: Bool = false
-    func execute(with completion: (result: Result) -> Void) {
-        let urlpath = NSBundle.mainBundle().pathForResource("SampleImage", ofType: "png")
-        let url:NSURL = NSURL.fileURLWithPath(urlpath!)
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
+        let urlpath = Bundle.main.path(forResource: "SampleImage", ofType: "png")
+        let url = URL(fileURLWithPath: urlpath!)
         
-        Snippets.graphClient.me().drive().root().itemByPath("sampleImage.png").contentRequest().uploadFromFile(url) {
-            (item: MSGraphDriveItem?, error: NSError!) in
+        Snippets.graphClient.me().drive().root().item(byPath: "sampleImage.png").contentRequest().upload(fromFile: url) {
+            (item: MSGraphDriveItem?, error: Error!) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
-                completion(result: .Success(displayText: "File uploaded (sampleImage.png)"))
+                completion(.Success(displayText: "File uploaded (sampleImage.png)"))
             }
         }
     }
@@ -426,32 +427,33 @@ struct UploadFile: Snippet {
 struct CreateFolder: Snippet {
     let name = "Create folder"
     let needAdminAccess: Bool = false
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
-        let driveItem = MSGraphDriveItem(dictionary: [MSNameConflict.rename().key: MSNameConflict.rename().value])
-        driveItem.name = "TestFolder"
-        driveItem.folder = MSGraphFolder()
+        if let driveItem = MSGraphDriveItem(dictionary: [MSNameConflict.rename().key: MSNameConflict.rename().value]) {
+            driveItem.name = "TestFolder"
+            driveItem.folder = MSGraphFolder()
         
-        // Use itemByPath as below to create a subfolder under an existing folder
-        // Snippets.graphClient.me().drive().root().itemByPath("existingFolder").request().getWithCompletion(
-        Snippets.graphClient.me().drive().root().request().getWithCompletion { (item: MSGraphDriveItem?, error: NSError?) in
-            
-            if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
-            }
-            
-            guard let validItem = item else {
-                completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Valid item not returned for a path")))
-                return
-            }
-            
-            Snippets.graphClient.me().drive().items(validItem.entityId).children().request().addDriveItem(driveItem) {
-                (item: MSGraphDriveItem?, error: NSError?) in
+            // Use itemByPath as below to create a subfolder under an existing folder
+            // Snippets.graphClient.me().drive().root().itemByPath("existingFolder").request().getWithCompletion(
+            Snippets.graphClient.me().drive().root().request().getWithCompletion { (item: MSGraphDriveItem?, error: Error?) in
+                
                 if let nsError = error {
-                    completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                    completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
                 }
-                else {
-                    completion(result: .Success(displayText: "Created a folder \(item!.name)"))
+                
+                guard let validItem = item else {
+                    completion(.Failure(error: MSGraphError.UnexpectecError(errorString: "Valid item not returned for a path")))
+                    return
+                }
+                
+                Snippets.graphClient.me().drive().items(validItem.entityId).children().request().add(driveItem) {
+                    (item: MSGraphDriveItem?, error: Error?) in
+                    if let nsError = error {
+                        completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
+                    }
+                    else {
+                        completion(.Success(displayText: "Created a folder \(item!.name!)"))
+                    }
                 }
             }
         }
@@ -464,23 +466,23 @@ struct CreateFolder: Snippet {
 struct DownloadFile: Snippet {
     let name = "Download file"
     let needAdminAccess: Bool = false
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         // Enter a valid event id
         let fileId = "ENTER_VALID_ID"
         
-        Snippets.graphClient.me().drive().items(fileId).contentRequest().downloadWithCompletion({
-            (url: NSURL?, response: NSURLResponse?, error: NSError?) in
+        Snippets.graphClient.me().drive().items(fileId).contentRequest().download(completion: {
+            (url: URL?, response: URLResponse?, error: Error?) in
             
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
                 guard let downloadedUrl = url else {
-                    completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Downloaded URL not found")))
+                    completion(.Failure(error: MSGraphError.UnexpectecError(errorString: "Downloaded URL not found")))
                     return
                 }
-                completion(result: .Success(displayText: "Downloaded file at \(downloadedUrl.absoluteString)"))
+                completion(.Success(displayText: "Downloaded file at \(downloadedUrl.absoluteString)"))
             }
         })
     }
@@ -492,19 +494,19 @@ struct DownloadFile: Snippet {
 struct UpdateFile: Snippet {
     let name = "Update file"
     let needAdminAccess: Bool = false
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         // Enter a valid event id
         let fileId = "ENTER_VALID_ID"
         
-        let uploadData = "newTextValue".dataUsingEncoding(NSUTF8StringEncoding)
-        Snippets.graphClient.me().drive().items(fileId).contentRequest().uploadFromData(uploadData, completion: {
-            (updatedItem: MSGraphDriveItem?, error: NSError?) in
+        let uploadData = "newTextValue".data(using: String.Encoding.utf8)
+        Snippets.graphClient.me().drive().items(fileId).contentRequest().upload(from: uploadData, completion: {
+            (updatedItem: MSGraphDriveItem?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
-                completion(result: .Success(displayText: "File \(updatedItem!.name) contents updated"))
+                completion(.Success(displayText: "File \(updatedItem!.name!) contents updated"))
             }
         })
     }
@@ -516,30 +518,30 @@ struct UpdateFile: Snippet {
 struct RenameFile: Snippet {
     let name = "Rename file"
     let needAdminAccess: Bool = false
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         // Enter a valid event id
         let fileId = "ENTER_VALID_ID"
       
         Snippets.graphClient.me().drive().items(fileId).request().getWithCompletion {
-            (file: MSGraphDriveItem?, error: NSError?) in
+            (file: MSGraphDriveItem?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
                 guard let validFile = file else {
-                    completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Valid file not returned")))
+                    completion(.Failure(error: MSGraphError.UnexpectecError(errorString: "Valid file not returned")))
                     return
                 }
                 
                 validFile.name = "NewTextFileName"
                 Snippets.graphClient.me().drive().items(validFile.entityId).request().update(validFile, withCompletion: {
-                    (updateItem: MSGraphDriveItem?, error: NSError?) in
+                    (updateItem: MSGraphDriveItem?, error: Error?) in
                     if let nsError = error {
-                        completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                        completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
                     }
                     else {
-                        completion(result: .Success(displayText: "New name is \(updateItem!.name)"))
+                        completion(.Success(displayText: "New name is \(updateItem!.name!)"))
                     }
                 })
             }
@@ -553,17 +555,17 @@ struct RenameFile: Snippet {
 struct DeleteFile: Snippet {
     let name = "Delete file"
     let needAdminAccess: Bool = false
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         
         // Enter a valid event id
         let fileId = "ENTER_VALID_ID"
         
-        Snippets.graphClient.me().drive().items(fileId).request().deleteWithCompletion({ (error: NSError?) in
+        Snippets.graphClient.me().drive().items(fileId).request().delete(completion: { (error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
-                completion(result: .Success(displayText: "File deleted"))
+                completion(.Success(displayText: "File deleted"))
             }
         })
     }
@@ -575,12 +577,12 @@ struct DeleteFile: Snippet {
 struct GetManager: Snippet {
     let name = "Get manager"
     let needAdminAccess: Bool = false
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         Snippets.graphClient.me().manager().request().getWithCompletion {
-            (directoryObject: MSGraphDirectoryObject?, error: NSError?) in
+            (directoryObject: MSGraphDirectoryObject?, error: Error?) in
             
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
                 var displayString: String = "Manager information: \n"
@@ -594,7 +596,7 @@ struct GetManager: Snippet {
                     }
                     displayString += "Full object is\n\(manager)"
                 }
-                completion(result: .Success(displayText: "\(displayString)"))
+                completion(.Success(displayText: "\(displayString)"))
             }
         }
     }
@@ -606,10 +608,10 @@ struct GetManager: Snippet {
 struct GetDirects: Snippet {
     let name = "Get directs"
     let needAdminAccess: Bool = false
-    func execute(with completion: (result: Result) -> Void) {
-        Snippets.graphClient.me().directReports().request().getWithCompletion { (directCollection: MSCollection?, nextRequest: MSGraphUserDirectReportsCollectionWithReferencesRequest?, error: NSError?) in
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
+        Snippets.graphClient.me().directReports().request().getWithCompletion { (directCollection: MSCollection?, nextRequest: MSGraphUserDirectReportsCollectionWithReferencesRequest?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
                 var displayString = "List of directs: \n"
@@ -617,7 +619,7 @@ struct GetDirects: Snippet {
                     
                     for direct: MSGraphDirectoryObject in directs.value as! [MSGraphDirectoryObject] {
                         guard let name = direct.dictionaryFromItem()["displayName"] else {
-                            completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Display name not found")))
+                            completion(.Failure(error: MSGraphError.UnexpectecError(errorString: "Display name not found")))
                             return
                         }
                         displayString += "\(name)\n"
@@ -628,7 +630,7 @@ struct GetDirects: Snippet {
                     displayString += "Next request available for more users"
                 }
                 
-                completion(result: .Success(displayText: "\(displayString)"))
+                completion(.Success(displayText: "\(displayString)"))
             }
         }
     }
@@ -642,20 +644,20 @@ struct GetDirects: Snippet {
 struct GetPhoto: Snippet {
     let name = "Get photo"
     let needAdminAccess: Bool = false
-    func execute(with completion: (result: Result) -> Void) {
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
         Snippets.graphClient.me().photo().request().getWithCompletion {
-            (photo: MSGraphProfilePhoto?, error: NSError?) in
+            (photo: MSGraphProfilePhoto?, error: Error?) in
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
             }
             else {
                 
                 guard let photoMetric = photo else {
-                    completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Photo width and height not found")))
+                    completion(.Failure(error: MSGraphError.UnexpectecError(errorString: "Photo width and height not found")))
                     return
                 }
                 let displayString = "Photo size is \(photoMetric.height) x \(photoMetric.width)"
-                completion(result: .Success(displayText: "\(displayString)"))
+                completion(.Success(displayText: "\(displayString)"))
             }
         }
     }
@@ -667,25 +669,25 @@ struct GetPhoto: Snippet {
 struct GetPhotoValue: Snippet {
     let name = "Get photo value"
     let needAdminAccess: Bool = false
-    func execute(with completion: (result: Result) -> Void) {
-        
-        Snippets.graphClient.me().photoValue().downloadWithCompletion {
-            (url: NSURL?, response: NSURLResponse?, error: NSError?) in
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
+
+        Snippets.graphClient.me().photoValue().download {
+            (url: URL?, response: URLResponse?, error: Error?) in
             
             if let nsError = error {
-                completion(result: .Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
                 return
             }
             
             guard let picUrl = url else {
-                completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "No downloaded URL")))
+                completion(.Failure(error: MSGraphError.UnexpectecError(errorString: "No downloaded URL")))
                 return
             }
             
-            let picData = NSData(contentsOfURL: picUrl)
+            let picData = try? Data(contentsOf: picUrl)
             let picImage = UIImage(data: picData!)
             
-            completion(result: .SuccessDownloadImage(displayImage: picImage))
+            completion(.SuccessDownloadImage(displayImage: picImage))
         }
     }
 }
@@ -707,21 +709,21 @@ extension Snippets {
         event.body.content = "Sample event body"
         event.importance = MSGraphImportance.normal()
         
-        let startDate: NSDate = NSDate(timeInterval: 30 * 60, sinceDate: NSDate())
-        let endDate: NSDate = NSDate(timeInterval: 30 * 60, sinceDate: startDate)
+        let startDate: Date = Date(timeInterval: 30 * 60, since: Date())
+        let endDate: Date = Date(timeInterval: 30 * 60, since: startDate)
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss"
         
         event.start = MSGraphDateTimeTimeZone()
-        event.start.dateTime = dateFormatter.stringFromDate(startDate)
+        event.start.dateTime = dateFormatter.string(from: startDate)
         
         // For more timezone settings, visit this link
         // http://graph.microsoft.io/en-us/docs/api-reference/v1.0/resources/datetimetimezone
         event.start.timeZone = "Pacific/Honolulu"
         
         event.end = MSGraphDateTimeTimeZone()
-        event.end.dateTime = dateFormatter.stringFromDate(endDate)
+        event.end.dateTime = dateFormatter.string(from: endDate)
         event.end.timeZone = "Pacific/Honolulu"
         
         if !series {
@@ -737,7 +739,7 @@ extension Snippets {
             event.recurrence.pattern.daysOfWeek = [MSGraphDayOfWeek.friday()]
             event.recurrence.range = MSGraphRecurrenceRange()
             event.recurrence.range.type = MSGraphRecurrenceRangeType.noEnd()
-            event.recurrence.range.startDate = MSDate(NSDate: startDate)
+            event.recurrence.range.startDate = MSDate(nsDate: startDate)
         }
         return event
     }
