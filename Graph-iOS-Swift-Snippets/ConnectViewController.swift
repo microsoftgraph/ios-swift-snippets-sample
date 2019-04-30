@@ -6,17 +6,17 @@
 
 import UIKit
 
-class ConnectViewController: UIViewController, UISplitViewControllerDelegate {
-
+class ConnectViewController: UIViewController, UISplitViewControllerDelegate
+{
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var connectButton: UIButton!
    
     let authentication: Authentication = Authentication()
 
-    
     // MARK: - Split view
    
-    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController:UIViewController, ontoPrimaryViewController primaryViewController:UIViewController) -> Bool {
+    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController:UIViewController, ontoPrimaryViewController primaryViewController:UIViewController) -> Bool
+    {
         guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
         guard let topAsDetailController = secondaryAsNavController.topViewController as? DetailViewController else { return false }
         if topAsDetailController.snippet == nil {
@@ -27,17 +27,18 @@ class ConnectViewController: UIViewController, UISplitViewControllerDelegate {
     }
 
     
-    @IBAction func connectToGraph(sender: AnyObject) {
+    @IBAction func connectToGraph(_ sender: Any)
+    {
         authenticate()
     }
     
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
         if segue.identifier == "showSnippets" {
-            let splitViewController = segue.destinationViewController as! UISplitViewController
+            let splitViewController = segue.destination as! UISplitViewController
             
             let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
-            navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
+            navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
             
             let navController = splitViewController.viewControllers.first as! UINavigationController
             print(navController)
@@ -46,24 +47,23 @@ class ConnectViewController: UIViewController, UISplitViewControllerDelegate {
             masterViewController.authentication = self.authentication
             
             splitViewController.delegate = self
-            
         }
     }
-}
+    
+    // MARK: - Private
+    
+    private func authenticate()
+    {
+        showLoadingView(show: true)
 
-// MARK: Authentication
-private extension ConnectViewController {
-    func authenticate() {
-        loadingUI(show: true)
-        
         let clientId = ApplicationConstants.clientId
         let scopes = ApplicationConstants.scopes
-        
+
         authentication.connectToGraph(withClientId: clientId, scopes: scopes) {
             (error) in
-            
-            defer {self.loadingUI(show: false)}
-            
+
+            defer { self.showLoadingView(show: false) }
+
             if let graphError = error {
                 switch graphError {
                 case .NSErrorType(let nsError):
@@ -73,39 +73,32 @@ private extension ConnectViewController {
                     print("Unexpected error:", errorString)
                     self.showError(message: "Check print log for error details")
                 }
+            } else {
+                self.performSegue(withIdentifier: "showSnippets", sender: nil)
             }
-            else {
-                self.performSegueWithIdentifier("showSnippets", sender: nil)
-            }
-        }
-    }
-}
-
-
-// MARK: UI Helper
-private extension ConnectViewController {
-    func loadingUI(show show: Bool) {
-        if show {
-            self.activityIndicator.startAnimating()
-            self.connectButton.setTitle("Connecting...", forState: .Normal)
-            self.connectButton.enabled = false;
-        }
-        else {
-            self.activityIndicator.stopAnimating()
-            self.connectButton.setTitle("Connect", forState: .Normal)
-            self.connectButton.enabled = true;
         }
     }
     
-    func showError(message message:String) {
-        dispatch_async(dispatch_get_main_queue(),{
-            let alertControl = UIAlertController(title: "Error", message: message, preferredStyle: .Alert)
-            alertControl.addAction(UIAlertAction(title: "Close", style: .Default, handler: nil))
+    private func showLoadingView(show: Bool)
+    {
+        if show {
+            activityIndicator.startAnimating()
+            connectButton.setTitle("Connecting...", for: .normal)
+            connectButton.isEnabled = false
+        } else {
+            activityIndicator.stopAnimating()
+            connectButton.setTitle("Connect", for: .normal)
+            connectButton.isEnabled = true
+        }
+    }
+    
+    func showError(message: String)
+    {
+        DispatchQueue.main.async {
+            let alertControl = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            alertControl.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
             
-            self.presentViewController(alertControl, animated: true, completion: nil)
-        })
+            self.present(alertControl, animated: true, completion: nil)
+        }
     }
 }
-
-
-

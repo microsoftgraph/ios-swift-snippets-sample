@@ -5,41 +5,36 @@
 
 import Foundation
 
-struct Authentication {
+class Authentication: NSObject
+{
     var authenticationProvider: NXOAuth2AuthenticationProvider?
-        {
-        get {
-            return NXOAuth2AuthenticationProvider.sharedAuthProvider()
-        }
+    {
+        get { return NXOAuth2AuthenticationProvider.sharedAuth() }
     }
     
-}
-
-extension Authentication {
     func connectToGraph(withClientId clientId: String,
-                                     scopes: [String],
-                                     completion:(error: MSGraphError?) -> Void) {
+                        scopes: [String],
+                        completion:@escaping (_ error: MSGraphError?) -> Void)
+    {
         NXOAuth2AuthenticationProvider.setClientId(clientId, scopes: scopes)
         
-        if NXOAuth2AuthenticationProvider.sharedAuthProvider().loginSilent() == true {
-            completion(error: nil)
+        if NXOAuth2AuthenticationProvider.sharedAuth().loginSilent() == true {
+            completion(nil)
         }
         else {
-            NXOAuth2AuthenticationProvider.sharedAuthProvider()
-                .loginWithViewController(nil) { (error: NSError?) in
-                    if let nserror = error {
-                        completion(error: MSGraphError.NSErrorType(error: nserror))
-                    }
-                    else {
-                        completion(error: nil)
-                    }
-            }
+            NXOAuth2AuthenticationProvider.sharedAuth()?.login(with: nil, completion: { (error) in
+                if let nserror = error {
+                    completion(MSGraphError.NSErrorType(error: nserror as NSError))
+                } else {
+                    completion(nil)
+                }
+            })
         }
-   
+        
     }
     
-    func disconnect() {
-        NXOAuth2AuthenticationProvider.sharedAuthProvider().logout()
+    func disconnect()
+    {
+        NXOAuth2AuthenticationProvider.sharedAuth().logout()
     }
-
 }
