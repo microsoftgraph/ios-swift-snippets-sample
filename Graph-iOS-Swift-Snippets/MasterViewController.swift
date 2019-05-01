@@ -9,7 +9,7 @@ import UIKit
 class MasterViewController: UITableViewController
 {
     var detailViewController: DetailViewController?
-    var authentication: Authentication!
+    var authenticationProvider: AuthenticationProvider!
     var snippets: Snippets!
     var objects = [AnyObject]()
     
@@ -17,7 +17,7 @@ class MasterViewController: UITableViewController
     {
         super.viewDidLoad()
         
-        snippets = Snippets(with: authentication.authenticationProvider!)
+        snippets = Snippets(authenticationProvider: authenticationProvider)
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -45,7 +45,7 @@ class MasterViewController: UITableViewController
     
     @IBAction func disconnect(_ sender: Any)
     {
-//        self.authentication.disconnect()
+        authenticationProvider.disconnect()
         self.navigationController?.splitViewController?.dismiss(animated: true, completion: nil)
     }
 

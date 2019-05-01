@@ -5,13 +5,27 @@
 
 
 import UIKit
+import MSAL
 
 class ConnectViewController: UIViewController, UISplitViewControllerDelegate
 {
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var connectButton: UIButton!
    
-    let authentication: Authentication = Authentication()
+    let authenticationProvider: AuthenticationProvider? = {
+        guard let authorityUrl = URL(string: ApplicationConstants.authority) else { return nil }
+        
+        var authenticationProvider: AuthenticationProvider?
+        do {
+            let authority = try MSALAADAuthority(url: authorityUrl)
+            let clientId = ApplicationConstants.clientId
+            authenticationProvider = try AuthenticationProvider(clientId: clientId, authority: authority)
+        } catch let error as NSError {
+            print("Error: ", error)
+        }
+        
+        return authenticationProvider
+    }()
 
     // MARK: - Split view
    
@@ -44,7 +58,7 @@ class ConnectViewController: UIViewController, UISplitViewControllerDelegate
             print(navController)
             
             let masterViewController = navController.topViewController as! MasterViewController
-            masterViewController.authentication = self.authentication
+            masterViewController.authenticationProvider = self.authenticationProvider
             
             splitViewController.delegate = self
         }
@@ -54,28 +68,23 @@ class ConnectViewController: UIViewController, UISplitViewControllerDelegate
     
     private func authenticate()
     {
-        showLoadingView(show: true)
-
-        let clientId = ApplicationConstants.clientId
+        guard let authenticationProvider = self.authenticationProvider else { return }
         let scopes = ApplicationConstants.scopes
-
-        authentication.connectToGraph(withClientId: clientId, scopes: scopes) {
-            (error) in
-
-            defer { self.showLoadingView(show: false) }
-
-            if let graphError = error {
-                switch graphError {
-                case .NSErrorType(let nsError):
-                    print("Error:", nsError.localizedDescription)
-                    self.showError(message: "Check print log for error details")
-                case .UnexpectecError(let errorString):
-                    print("Unexpected error:", errorString)
-                    self.showError(message: "Check print log for error details")
+        
+        showLoadingView(show: true)
+        authenticationProvider.acquireAuthToken(scopes: scopes) { (success, error) in
+            self.showLoadingView(show: false)
+            
+            if success {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.performSegue(withIdentifier: "showSnippets", sender: nil)
                 }
-            } else {
-                self.performSegue(withIdentifier: "showSnippets", sender: nil)
+                
+                return;
             }
+            
+            print("Error: ", error?.description ?? "nil error")
+            self.showError(message: "Check print log for error details")
         }
     }
     

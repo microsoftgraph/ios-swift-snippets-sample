@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		960EBA121CEA8472007B8171 /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960EBA111CEA8472007B8171 /* ConnectViewController.swift */; };
-		9682B8C31CEA92B500EEA064 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9682B8C21CEA92B500EEA064 /* Authentication.swift */; };
+		9682B8C31CEA92B500EEA064 /* AuthenticationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9682B8C21CEA92B500EEA064 /* AuthenticationProvider.swift */; };
 		96B34CD41CE548C500B6F4E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B34CD31CE548C500B6F4E8 /* AppDelegate.swift */; };
 		96B34CD61CE548C500B6F4E8 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B34CD51CE548C500B6F4E8 /* MasterViewController.swift */; };
 		96B34CD81CE548C500B6F4E8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B34CD71CE548C500B6F4E8 /* DetailViewController.swift */; };
@@ -21,14 +21,15 @@
 		96C4ED991CF6709D00B97245 /* GroupsSnippets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C4ED981CF6709D00B97245 /* GroupsSnippets.swift */; };
 		96C80A781CEA93AA005D8FC4 /* ApplicationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C80A771CEA93AA005D8FC4 /* ApplicationConstants.swift */; };
 		96E8E3761CF3D5CE00E3795C /* EmailBody.html in Resources */ = {isa = PBXBuildFile; fileRef = 96E8E3751CF3D5CE00E3795C /* EmailBody.html */; };
-		A94B5F82F665609A7EC85492 /* libPods-Graph-iOS-Swift-Snippets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A432D87B00168EC956CE5957 /* libPods-Graph-iOS-Swift-Snippets.a */; };
+		BDBB226ADB67255D4C8ED655 /* Pods_Graph_iOS_Swift_Snippets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7636C72C1EBF480F90E6E63E /* Pods_Graph_iOS_Swift_Snippets.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1A6FD9F3B470B571895415AF /* Pods-Graph-iOS-Swift-Snippets.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graph-iOS-Swift-Snippets.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Graph-iOS-Swift-Snippets/Pods-Graph-iOS-Swift-Snippets.debug.xcconfig"; sourceTree = "<group>"; };
+		7636C72C1EBF480F90E6E63E /* Pods_Graph_iOS_Swift_Snippets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Graph_iOS_Swift_Snippets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88338EAC202F86B11BFC9413 /* Pods-Graph-iOS-Swift-Snippets.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graph-iOS-Swift-Snippets.release.xcconfig"; path = "Pods/Target Support Files/Pods-Graph-iOS-Swift-Snippets/Pods-Graph-iOS-Swift-Snippets.release.xcconfig"; sourceTree = "<group>"; };
 		960EBA111CEA8472007B8171 /* ConnectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
-		9682B8C21CEA92B500EEA064 /* Authentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		9682B8C21CEA92B500EEA064 /* AuthenticationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationProvider.swift; sourceTree = "<group>"; };
 		96B34CD01CE548C500B6F4E8 /* Graph-iOS-Swift-Snippets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Graph-iOS-Swift-Snippets.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96B34CD31CE548C500B6F4E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		96B34CD51CE548C500B6F4E8 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -44,7 +45,6 @@
 		96C80A731CEA9377005D8FC4 /* Graph-iOS-Swift-Snippets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Graph-iOS-Swift-Snippets-Bridging-Header.h"; sourceTree = "<group>"; };
 		96C80A771CEA93AA005D8FC4 /* ApplicationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationConstants.swift; sourceTree = "<group>"; };
 		96E8E3751CF3D5CE00E3795C /* EmailBody.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EmailBody.html; sourceTree = "<group>"; };
-		A432D87B00168EC956CE5957 /* libPods-Graph-iOS-Swift-Snippets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Graph-iOS-Swift-Snippets.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A94B5F82F665609A7EC85492 /* libPods-Graph-iOS-Swift-Snippets.a in Frameworks */,
+				BDBB226ADB67255D4C8ED655 /* Pods_Graph_iOS_Swift_Snippets.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,7 +134,7 @@
 		96C4ED9B1CF6713300B97245 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				9682B8C21CEA92B500EEA064 /* Authentication.swift */,
+				9682B8C21CEA92B500EEA064 /* AuthenticationProvider.swift */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
@@ -160,7 +160,7 @@
 		9F04E14C6BD42E60D6DC42D4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A432D87B00168EC956CE5957 /* libPods-Graph-iOS-Swift-Snippets.a */,
+				7636C72C1EBF480F90E6E63E /* Pods_Graph_iOS_Swift_Snippets.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -176,6 +176,7 @@
 				96B34CCC1CE548C500B6F4E8 /* Sources */,
 				96B34CCD1CE548C500B6F4E8 /* Frameworks */,
 				96B34CCE1CE548C500B6F4E8 /* Resources */,
+				47FD35A13F916C6982C087C5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -235,6 +236,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		47FD35A13F916C6982C087C5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Graph-iOS-Swift-Snippets/Pods-Graph-iOS-Swift-Snippets-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/MSAL/MSAL.framework",
+				"${BUILT_PRODUCTS_DIR}/MSGraphSDK/MSGraphSDK.framework",
+				"${BUILT_PRODUCTS_DIR}/MSGraphSDK-NXOAuth2Adapter/MSGraphSDK_NXOAuth2Adapter.framework",
+				"${BUILT_PRODUCTS_DIR}/NXOAuth2Client/NXOAuth2Client.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSAL.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSGraphSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSGraphSDK_NXOAuth2Adapter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NXOAuth2Client.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Graph-iOS-Swift-Snippets/Pods-Graph-iOS-Swift-Snippets-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		8548920E38D8B76ACEB030AB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -267,7 +296,7 @@
 				96C4ED991CF6709D00B97245 /* GroupsSnippets.swift in Sources */,
 				96B34CD41CE548C500B6F4E8 /* AppDelegate.swift in Sources */,
 				96B34CE81CE54D1000B6F4E8 /* Snippets.swift in Sources */,
-				9682B8C31CEA92B500EEA064 /* Authentication.swift in Sources */,
+				9682B8C31CEA92B500EEA064 /* AuthenticationProvider.swift in Sources */,
 				96C80A781CEA93AA005D8FC4 /* ApplicationConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

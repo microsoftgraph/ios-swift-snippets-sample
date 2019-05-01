@@ -49,20 +49,20 @@ struct Snippets
 
     let snippetSections: [SnippetSection]
 
-    init(with authenticationProvider: NXOAuth2AuthenticationProvider)
+    init(authenticationProvider: MSAuthenticationProvider)
     {
         let userArray = SnippetSection(name: "User",
                                      snippets: [
                                         GetMe(),
-//                                        GetUsers(),
-//                                        GetDrive(),
-//                                        GetEvents(),
+                                        GetUsers(),
+                                        GetDrive(),
+                                        GetEvents(),
 //                                        CreateEvent(),
-//                                        UpdateEvent(),
-//                                        DeleteEevnt(),
-//                                        GetMessages(),
-//                                        SendMessage(),
-//                                        SendMessageHTML(),
+                                        UpdateEvent(),
+                                        DeleteEevnt(),
+                                        GetMessages(),
+                                        SendMessage(),
+                                        SendMessageHTML(),
 //                                        GetUserFiles(),
 //                                        CreateTextFile(),
 //                                        CreateFolder(),
