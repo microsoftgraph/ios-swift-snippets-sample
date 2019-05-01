@@ -33,16 +33,6 @@ class DetailViewController: UIViewController {
         executeSnippet()
     }
     
-//    @IBAction func runSnippet(_ sender: AnyObject)
-//    {
-////        UIView.animateWithDuration(0.35,
-////                                   animations: {
-////                                    self.activityIndicatorView.hidden = true
-////            }) { (finished) in
-////                self.activityIndicatorView.stopAnimating()
-////        }
-//    }
-    
     // MARK: - Private
     
     private func executeSnippet()
@@ -122,7 +112,6 @@ class DetailViewController: UIViewController {
             accessLevelLabel.isHidden = !snippet.needAdminAccess
         }
     }
-    
     
     func setResult(with string: String)
     {

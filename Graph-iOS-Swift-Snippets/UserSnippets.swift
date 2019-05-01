@@ -3,7 +3,6 @@
  * See LICENSE in the project root for license information.
  */
 
-
 import Foundation
 import MSGraphSDK
 
@@ -18,8 +17,8 @@ struct GetMe: Snippet
     func execute(with completion: @escaping (_ result: Result) -> Void)
     {
         Snippets.graphClient.me().request()?.getWithCompletion({ (user, error) in
-            if let nsError = error {
-                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
             }
             else {
                 let displayName = user?.displayName ?? ""
@@ -42,8 +41,8 @@ struct GetUsers: Snippet
     func execute(with completion: @escaping (_ result: Result) -> Void)
     {
         Snippets.graphClient.users().request()?.getWithCompletion({ (userCollection, nextRequest, error) in
-            if let nsError = error {
-                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
             }
             else {
                 var displayString = "List of users:\n"
@@ -73,8 +72,8 @@ struct GetDrive: Snippet
     func execute(with completion: @escaping (_ result: Result) -> Void)
     {
         Snippets.graphClient.me().drive().request()?.getWithCompletion({ (drive, error) in
-            if let nsError = error {
-                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
             }
             else {
                 var displayString = "Drive information:\n"
@@ -99,8 +98,8 @@ struct GetEvents: Snippet
     func execute(with completion: @escaping (_ result: Result) -> Void)
     {
         Snippets.graphClient.me().events().request()?.getWithCompletion({ (eventCollection, nextRequest, error) in
-            if let nsError = error {
-                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
             }
             else {
                 var displayString = "List of events (subjects):\n"
@@ -123,28 +122,27 @@ struct GetEvents: Snippet
 
 // Create an event in the signed in user's calendar.
 // Applies to personal or work accounts
-//struct CreateEvent: Snippet
-//{
-//    let name = "Create event"
-//    let needAdminAccess: Bool = false
-//
-//    func execute(with completion: @escaping (_ result: Result) -> Void)
-//    {
-//        let event = Snippets.createEventObject(isSeries: false)
-//
-//        Snippets.graphClient.me().calendar().events().request().addEvent(event) {
-//            (event: MSGraphEvent?, error: NSError?) in
-//            if let nsError = error {
-//                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//            }
-//            else {
-//                let displayString = "Event created with id \(event!.entityId)"
-//                completion(result: .Success(displayText: displayString))
-//            }
-//        }
-//    }
-//}
-//
+struct CreateEvent: Snippet
+{
+    let name = "Create event"
+    let needAdminAccess: Bool = false
+
+    func execute(with completion: @escaping (_ result: Result) -> Void)
+    {
+        let event = Snippets.createEventObject(isSeries: false)
+
+        Snippets.graphClient.me().calendar().events()?.request()?.add(event, withCompletion: { (event, error) in
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+            } else {
+                let entityId = event?.entityId ?? ""
+                let displayString = "Event created with id \(entityId)"
+                completion(.Success(displayText: displayString))
+            }
+        })
+    }
+}
+
 //
 // Updates an event in the signed in user's calendar.
 // Applies to personal or work accounts
@@ -161,8 +159,8 @@ struct UpdateEvent: Snippet
         // Get an event and then update
         
         Snippets.graphClient.me().events(eventId).request()?.getWithCompletion({ (event, error) in
-            if let nsError = error {
-                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
             }
             else {
                 guard let validEvent = event else {
@@ -172,8 +170,8 @@ struct UpdateEvent: Snippet
                 validEvent.subject = "New Name"
                 
                 Snippets.graphClient.me().events(validEvent.entityId).request()?.update(validEvent, withCompletion: { (updatedEvent, error) in
-                    if let nsError = error {
-                        completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
+                    if let nsError = error as NSError? {
+                        completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
                     }
                     else {
                         let displayString = "Event updated with a new subject"
@@ -199,8 +197,8 @@ struct DeleteEevnt: Snippet
         let eventId = "ENTER_VALID_EVENT_ID"
         
         Snippets.graphClient.me().events(eventId)?.request()?.delete(completion: { (error) in
-            if let nsError = error {
-                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
             }
             else {
                 completion(.Success(displayText: "Deleted calendar event id: \(eventId)"))
@@ -220,8 +218,8 @@ struct GetMessages: Snippet
     func execute(with completion: @escaping (_ result: Result) -> Void)
     {
         Snippets.graphClient.me().messages().request()?.getWithCompletion({ (messageCollection, nextRequest, error) in
-            if let nsError = error {
-                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
             }
             else {
                 var displayString = "List of messages:\n"
@@ -285,8 +283,8 @@ struct SendMessage: Snippet
         
         guard let mailRequest = Snippets.graphClient.me()?.sendMail(with: message, saveToSentItems: true)?.request() else { return }
         mailRequest.execute { (response, error) in
-            if let nsError = error {
-                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
             }
             else {
                 completion(.Success(displayText: "Message sent"))
@@ -340,8 +338,8 @@ struct SendMessageHTML: Snippet
         // ===================================================================
         let mailRequest = Snippets.graphClient.me().sendMail(with: message, saveToSentItems: true).request()
         mailRequest?.execute(completion: { (response, error) in
-            if let nsError = error {
-                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
             }
             else {
                 completion(.Success(displayText: "Message sent"))
@@ -349,405 +347,386 @@ struct SendMessageHTML: Snippet
         })
     }
 }
-//
-//
-//// Returns all of the user's files.
-//// Applies to personal or work accounts
-//struct GetUserFiles: Snippet {
-//    let name = "Get user files"
-//    let needAdminAccess: Bool = false
-//    
-//    func execute(with completion: @escaping (_ result: Result) -> Void) {
-//        Snippets.graphClient.me().drive().root().children().request().getWithCompletion {
-//            (fileCollection: MSCollection?, nextRequest: MSGraphDriveItemChildrenCollectionRequest?, error: NSError?) in
-//            
-//            if let nsError = error {
-//                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//            }
-//            else {
-//                var displayString = "List of files: \n"
-//                if let files = fileCollection {
-//                    
-//                    for file: MSGraphDriveItem in files.value as! [MSGraphDriveItem] {
-//                        displayString += "\(file.name): \(file.size) \n"
-//                    }
-//                }
-//                
-//                if let _ = nextRequest {
-//                    displayString += "Next request available for more files"
-//                }
-//                
-//                completion(result: .Success(displayText: displayString))
-//            }
-//        }
-//    }
-//}
-//
-//
-//// Create a text file in the signed in user's OneDrive account.
-//// If a file already exists it will be overwritten.
-//// Applies to personal or work accounts
-//struct CreateTextFile: Snippet {
-//    let name = "Create text file"
-//    let needAdminAccess: Bool = false
-//    func execute(with completion: @escaping (_ result: Result) -> Void) {
-//        let uploadData = "Test".dataUsingEncoding(NSUTF8StringEncoding)
-//        
-//        Snippets.graphClient.me().drive().root().itemByPath("Test Folder/testTextfile.text").contentRequest().uploadFromData(uploadData) {
-//            (item: MSGraphDriveItem?, error: NSError?) in
-//            if let nsError = error {
-//                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//            }
-//            else {
-//                completion(result: .Success(displayText: "File created at Test Folder/testTextfile.text"))
-//            }
-//        }
-//    }
-//}
-//
-//
-//// Upload an image file in the signed in user's OneDrive account.
-//// Applies to personal or work accounts
-//struct UploadFile: Snippet {
-//    let name = "Upload image file"
-//    let needAdminAccess: Bool = false
-//    func execute(with completion: @escaping (_ result: Result) -> Void) {
-//        let urlpath = NSBundle.mainBundle().pathForResource("SampleImage", ofType: "png")
-//        let url:NSURL = NSURL.fileURLWithPath(urlpath!)
-//        
-//        Snippets.graphClient.me().drive().root().itemByPath("sampleImage.png").contentRequest().uploadFromFile(url) {
-//            (item: MSGraphDriveItem?, error: NSError!) in
-//            if let nsError = error {
-//                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//            }
-//            else {
-//                completion(result: .Success(displayText: "File uploaded (sampleImage.png)"))
-//            }
-//        }
-//    }
-//}
-//
-//
-//// Creates a new folder in the signed in user's OneDrive account.
-//// Applies to personal or work accounts
-//struct CreateFolder: Snippet {
-//    let name = "Create folder"
-//    let needAdminAccess: Bool = false
-//    func execute(with completion: @escaping (_ result: Result) -> Void) {
-//        
-//        let driveItem = MSGraphDriveItem(dictionary: [MSNameConflict.rename().key: MSNameConflict.rename().value])
-//        driveItem.name = "TestFolder"
-//        driveItem.folder = MSGraphFolder()
-//        
-//        // Use itemByPath as below to create a subfolder under an existing folder
-//        // Snippets.graphClient.me().drive().root().itemByPath("existingFolder").request().getWithCompletion(
-//        Snippets.graphClient.me().drive().root().request().getWithCompletion { (item: MSGraphDriveItem?, error: NSError?) in
-//            
-//            if let nsError = error {
-//                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//            }
-//            
-//            guard let validItem = item else {
-//                completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Valid item not returned for a path")))
-//                return
-//            }
-//            
-//            Snippets.graphClient.me().drive().items(validItem.entityId).children().request().addDriveItem(driveItem) {
-//                (item: MSGraphDriveItem?, error: NSError?) in
-//                if let nsError = error {
-//                    completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//                }
-//                else {
-//                    completion(result: .Success(displayText: "Created a folder \(item!.name)"))
-//                }
-//            }
-//        }
-//    }
-//}
-//
-//
-//// Downloads a file into the signed in user's OneDrive account. 
-//// Applies to personal or work accounts
-//struct DownloadFile: Snippet {
-//    let name = "Download file"
-//    let needAdminAccess: Bool = false
-//    func execute(with completion: @escaping (_ result: Result) -> Void) {
-//        
-//        // Enter a valid event id
-//        let fileId = "ENTER_VALID_ID"
-//        
-//        Snippets.graphClient.me().drive().items(fileId).contentRequest().downloadWithCompletion({
-//            (url: NSURL?, response: NSURLResponse?, error: NSError?) in
-//            
-//            if let nsError = error {
-//                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//            }
-//            else {
-//                guard let downloadedUrl = url else {
-//                    completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Downloaded URL not found")))
-//                    return
-//                }
-//                completion(result: .Success(displayText: "Downloaded file at \(downloadedUrl.absoluteString)"))
-//            }
-//        })
-//    }
-//}
-//
-//
-//// Uploads a file in the signed in user's OneDrive account.
-//// Applies to personal or work accounts
-//struct UpdateFile: Snippet {
-//    let name = "Update file"
-//    let needAdminAccess: Bool = false
-//    func execute(with completion: @escaping (_ result: Result) -> Void) {
-//        
-//        // Enter a valid event id
-//        let fileId = "ENTER_VALID_ID"
-//        
-//        let uploadData = "newTextValue".dataUsingEncoding(NSUTF8StringEncoding)
-//        Snippets.graphClient.me().drive().items(fileId).contentRequest().uploadFromData(uploadData, completion: {
-//            (updatedItem: MSGraphDriveItem?, error: NSError?) in
-//            if let nsError = error {
-//                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//            }
-//            else {
-//                completion(result: .Success(displayText: "File \(updatedItem!.name) contents updated"))
-//            }
-//        })
-//    }
-//}
-//
-//
-//// Renames a file in the signed in user's OneDrive account.
-//// Applies to personal or work accounts
-//struct RenameFile: Snippet {
-//    let name = "Rename file"
-//    let needAdminAccess: Bool = false
-//    func execute(with completion: @escaping (_ result: Result) -> Void) {
-//        
-//        // Enter a valid event id
-//        let fileId = "ENTER_VALID_ID"
-//      
-//        Snippets.graphClient.me().drive().items(fileId).request().getWithCompletion {
-//            (file: MSGraphDriveItem?, error: NSError?) in
-//            if let nsError = error {
-//                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//            }
-//            else {
-//                guard let validFile = file else {
-//                    completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Valid file not returned")))
-//                    return
-//                }
-//                
-//                validFile.name = "NewTextFileName"
-//                Snippets.graphClient.me().drive().items(validFile.entityId).request().update(validFile, withCompletion: {
-//                    (updateItem: MSGraphDriveItem?, error: NSError?) in
-//                    if let nsError = error {
-//                        completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//                    }
-//                    else {
-//                        completion(result: .Success(displayText: "New name is \(updateItem!.name)"))
-//                    }
-//                })
-//            }
-//        }
-//    }
-//}
-//
-//
-//// Deletes a file in the signed in user's OneDrive account. 
-//// Applies to personal or work accounts
-//struct DeleteFile: Snippet {
-//    let name = "Delete file"
-//    let needAdminAccess: Bool = false
-//    func execute(with completion: @escaping (_ result: Result) -> Void) {
-//        
-//        // Enter a valid event id
-//        let fileId = "ENTER_VALID_ID"
-//        
-//        Snippets.graphClient.me().drive().items(fileId).request().deleteWithCompletion({ (error: NSError?) in
-//            if let nsError = error {
-//                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//            }
-//            else {
-//                completion(result: .Success(displayText: "File deleted"))
-//            }
-//        })
-//    }
-//}
-//
-//
-//// Get user's manager if they have one.
-//// Applies to work accounts only
-//struct GetManager: Snippet {
-//    let name = "Get manager"
-//    let needAdminAccess: Bool = false
-//    func execute(with completion: @escaping (_ result: Result) -> Void) {
-//        Snippets.graphClient.me().manager().request().getWithCompletion {
-//            (directoryObject: MSGraphDirectoryObject?, error: NSError?) in
-//            
-//            if let nsError = error {
-//                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//            }
-//            else {
-//                var displayString: String = "Manager information: \n"
-//                
-//                if let manager = directoryObject {
-//                    if let managerName = manager.dictionaryFromItem()["displayName"] {
-//                        displayString += "Manager is \(managerName)\n\n"
-//                    }
-//                    else {
-//                        displayString += "No manager"
-//                    }
-//                    displayString += "Full object is\n\(manager)"
-//                }
-//                completion(result: .Success(displayText: "\(displayString)"))
-//            }
-//        }
-//    }
-//}
-//
-//
-//// Get user's direct reports
-//// Applies to work accounts only
-//struct GetDirects: Snippet {
-//    let name = "Get directs"
-//    let needAdminAccess: Bool = false
-//    func execute(with completion: @escaping (_ result: Result) -> Void) {
-//        Snippets.graphClient.me().directReports().request().getWithCompletion { (directCollection: MSCollection?, nextRequest: MSGraphUserDirectReportsCollectionWithReferencesRequest?, error: NSError?) in
-//            if let nsError = error {
-//                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//            }
-//            else {
-//                var displayString = "List of directs: \n"
-//                if let directs = directCollection {
-//                    
-//                    for direct: MSGraphDirectoryObject in directs.value as! [MSGraphDirectoryObject] {
-//                        guard let name = direct.dictionaryFromItem()["displayName"] else {
-//                            completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Display name not found")))
-//                            return
-//                        }
-//                        displayString += "\(name)\n"
-//                    }
-//                }
-//                
-//                if let _ = nextRequest {
-//                    displayString += "Next request available for more users"
-//                }
-//                
-//                completion(result: .Success(displayText: "\(displayString)"))
-//            }
-//        }
-//    }
-//}
-//
-//
-//
-//// Gets the signed-in user's photo data if they have a photo. 
-//// This snippet will return metadata for the user photo.
-//// Applies to work accounts only
-//struct GetPhoto: Snippet {
-//    let name = "Get photo"
-//    let needAdminAccess: Bool = false
-//    func execute(with completion: @escaping (_ result: Result) -> Void) {
-//        Snippets.graphClient.me().photo().request().getWithCompletion {
-//            (photo: MSGraphProfilePhoto?, error: NSError?) in
-//            if let nsError = error {
-//                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//            }
-//            else {
-//                
-//                guard let photoMetric = photo else {
-//                    completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "Photo width and height not found")))
-//                    return
-//                }
-//                let displayString = "Photo size is \(photoMetric.height) x \(photoMetric.width)"
-//                completion(result: .Success(displayText: "\(displayString)"))
-//            }
-//        }
-//    }
-//}
-//
-//
-//// Creates a new user in the tenant.
-//// Applicable to work accounts with admin rights
-//struct GetPhotoValue: Snippet {
-//    let name = "Get photo value"
-//    let needAdminAccess: Bool = false
-//    func execute(with completion: @escaping (_ result: Result) -> Void) {
-//        
-//        Snippets.graphClient.me().photoValue().downloadWithCompletion {
-//            (url: NSURL?, response: NSURLResponse?, error: NSError?) in
-//            
-//            if let nsError = error {
-//                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError as NSError)))
-//                return
-//            }
-//            
-//            guard let picUrl = url else {
-//                completion(result: .Failure(error: MSGraphError.UnexpectecError(errorString: "No downloaded URL")))
-//                return
-//            }
-//            
-//            let picData = NSData(contentsOfURL: picUrl)
-//            let picImage = UIImage(data: picData!)
-//            
-//            completion(result: .SuccessDownloadImage(displayImage: picImage))
-//        }
-//    }
-//}
-//
-//
-//// MARK: - Helper methods
-//
-//extension Snippets {
-//    
-//// Helper for creating a event object. 
-//// Set series to true to create a recurring event.
-//    
-//    static func createEventObject(isSeries series: Bool) -> MSGraphEvent {
-//        
-//        let event = MSGraphEvent()
-//        event.subject = "Event Subject"
-//        event.body = MSGraphItemBody()
-//        event.body.contentType = MSGraphBodyType.text()
-//        event.body.content = "Sample event body"
-//        event.importance = MSGraphImportance.normal()
-//        
-//        let startDate: NSDate = NSDate(timeInterval: 30 * 60, sinceDate: NSDate())
-//        let endDate: NSDate = NSDate(timeInterval: 30 * 60, sinceDate: startDate)
-//        
-//        let dateFormatter = NSDateFormatter()
-//        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss"
-//        
-//        event.start = MSGraphDateTimeTimeZone()
-//        event.start.dateTime = dateFormatter.stringFromDate(startDate)
-//        
-//        // For more timezone settings, visit this link
-//        // http://graph.microsoft.io/en-us/docs/api-reference/v1.0/resources/datetimetimezone
-//        event.start.timeZone = "Pacific/Honolulu"
-//        
-//        event.end = MSGraphDateTimeTimeZone()
-//        event.end.dateTime = dateFormatter.stringFromDate(endDate)
-//        event.end.timeZone = "Pacific/Honolulu"
-//        
-//        if !series {
-//            event.type = MSGraphEventType.singleInstance()
-//        }
-//        else {
-//            event.type = MSGraphEventType.seriesMaster()
-//            
-//            event.recurrence = MSGraphPatternedRecurrence()
-//            event.recurrence.pattern = MSGraphRecurrencePattern()
-//            event.recurrence.pattern.interval = 1
-//            event.recurrence.pattern.type = MSGraphRecurrencePatternType.weekly()
-//            event.recurrence.pattern.daysOfWeek = [MSGraphDayOfWeek.friday()]
-//            event.recurrence.range = MSGraphRecurrenceRange()
-//            event.recurrence.range.type = MSGraphRecurrenceRangeType.noEnd()
-//            event.recurrence.range.startDate = MSDate(NSDate: startDate)
-//        }
-//        return event
-//    }
-//}
+
+// Returns all of the user's files.
+// Applies to personal or work accounts
+struct GetUserFiles: Snippet
+{
+    let name = "Get user files"
+    let needAdminAccess: Bool = false
+    
+    func execute(with completion: @escaping (_ result: Result) -> Void)
+    {
+        Snippets.graphClient.me().drive().root().children()?.request()?.getWithCompletion({ (fileCollection, nextRequest, error) in
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+            } else {
+                var displayString = "List of files: \n"
+                if let files = fileCollection {
+                    
+                    for file: MSGraphDriveItem in files.value as! [MSGraphDriveItem] {
+                        let name = file.name ?? ""
+                        displayString += "\(name): \(file.size) \n"
+                    }
+                }
+                
+                if let _ = nextRequest {
+                    displayString += "Next request available for more files"
+                }
+                
+                completion(.Success(displayText: displayString))
+            }
+        })
+    }
+}
+
+// Create a text file in the signed in user's OneDrive account.
+// If a file already exists it will be overwritten.
+// Applies to personal or work accounts
+struct CreateTextFile: Snippet
+{
+    let name = "Create text file"
+    let needAdminAccess: Bool = false
+    func execute(with completion: @escaping (_ result: Result) -> Void)
+    {
+        let uploadData = "Test".data(using: String.Encoding.utf8)
+        
+        Snippets.graphClient.me().drive().root().item(byPath: "Test Folder/testTextfile.text").contentRequest()?.upload(from: uploadData, completion: { (item, error) in
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+            } else {
+                completion(.Success(displayText: "File created at Test Folder/testTextfile.text"))
+            }
+        })
+    }
+}
+
+// Upload an image file in the signed in user's OneDrive account.
+// Applies to personal or work accounts
+struct UploadFile: Snippet
+{
+    let name = "Upload image file"
+    let needAdminAccess: Bool = false
+    func execute(with completion: @escaping (_ result: Result) -> Void)
+    {
+        let urlpath = Bundle.main.path(forResource: "SampleImage", ofType: "png")
+        let url = NSURL.fileURL(withPath: urlpath!)
+        
+        Snippets.graphClient.me().drive().root().item(byPath: "sampleImage.png").contentRequest()?.upload(fromFile: url, completion: { (item, error) in
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+            } else {
+                completion(.Success(displayText: "File uploaded (sampleImage.png)"))
+            }
+        })
+    }
+}
+
+// Creates a new folder in the signed in user's OneDrive account.
+// Applies to personal or work accounts
+struct CreateFolder: Snippet
+{
+    let name = "Create folder"
+    let needAdminAccess: Bool = false
+    func execute(with completion: @escaping (_ result: Result) -> Void)
+    {
+        let driveItem = MSGraphDriveItem(dictionary: [MSNameConflict.rename().key: MSNameConflict.rename().value])
+        driveItem?.name = "TestFolder"
+        driveItem?.folder = MSGraphFolder()
+        
+        // Use itemByPath as below to create a subfolder under an existing folder
+        // Snippets.graphClient.me().drive().root().itemByPath("existingFolder").request().getWithCompletion(
+        Snippets.graphClient.me().drive().root().request()?.getWithCompletion({ (item, error) in
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+            }
+            
+            guard let validItem = item else {
+                completion(.Failure(error: MSGraphError.UnexpectecError(errorString: "Valid item not returned for a path")))
+                return
+            }
+            
+            Snippets.graphClient.me().drive().items(validItem.entityId).children().request()?.add(driveItem, withCompletion: { (item, error) in
+                if let nsError = error as NSError? {
+                    completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                } else {
+                    let name = item?.name ?? ""
+                    completion(.Success(displayText: "Created a folder \(name)"))
+                }
+            })
+        })
+    }
+}
 
 
+// Downloads a file into the signed in user's OneDrive account.
+// Applies to personal or work accounts
+struct DownloadFile: Snippet
+{
+    let name = "Download file"
+    let needAdminAccess: Bool = false
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
+        
+        // Enter a valid event id
+        let fileId = "ENTER_VALID_ID"
+        
+        Snippets.graphClient.me().drive().items(fileId).contentRequest()?.download(completion: { (url, response, error) in
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+            } else {
+                guard let downloadedUrl = url else {
+                    completion(.Failure(error: MSGraphError.UnexpectecError(errorString: "Downloaded URL not found")))
+                    return
+                }
+                completion(.Success(displayText: "Downloaded file at \(downloadedUrl.absoluteString)"))
+            }
+        })
+    }
+}
+
+// Uploads a file in the signed in user's OneDrive account.
+// Applies to personal or work accounts
+struct UpdateFile: Snippet
+{
+    let name = "Update file"
+    let needAdminAccess: Bool = false
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
+        
+        // Enter a valid event id
+        let fileId = "ENTER_VALID_ID"
+        
+        let uploadData = "newTextValue".data(using: String.Encoding.utf8)
+        Snippets.graphClient.me().drive().items(fileId).contentRequest()?.upload(from: uploadData, completion: { (updatedItem, error) in
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+            } else {
+                let name = updatedItem?.name ?? ""
+                completion(.Success(displayText: "File \(name) contents updated"))
+            }
+        })
+    }
+}
+
+// Renames a file in the signed in user's OneDrive account.
+// Applies to personal or work accounts
+struct RenameFile: Snippet
+{
+    let name = "Rename file"
+    let needAdminAccess: Bool = false
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
+        
+        // Enter a valid event id
+        let fileId = "ENTER_VALID_ID"
+      
+        Snippets.graphClient.me().drive().items(fileId).request()?.getWithCompletion({ (file, error) in
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+            }
+            else {
+                guard let validFile = file else {
+                    completion(.Failure(error: MSGraphError.UnexpectecError(errorString: "Valid file not returned")))
+                    return
+                }
+                
+                validFile.name = "NewTextFileName"
+                Snippets.graphClient.me().drive().items(validFile.entityId).request()?.update(validFile, withCompletion: { (updateItem, error) in
+                    if let nsError = error as NSError? {
+                        completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                    } else {
+                        let name = updateItem?.name ?? ""
+                        completion(.Success(displayText: "New name is \(name)"))
+                    }
+                })
+            }
+        })
+    }
+}
+
+
+// Deletes a file in the signed in user's OneDrive account.
+// Applies to personal or work accounts
+struct DeleteFile: Snippet
+{
+    let name = "Delete file"
+    let needAdminAccess: Bool = false
+    func execute(with completion: @escaping (_ result: Result) -> Void) {
+        
+        // Enter a valid event id
+        let fileId = "ENTER_VALID_ID"
+        
+        Snippets.graphClient.me().drive().items(fileId).request()?.delete(completion: { (error) in
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+            } else {
+                completion(.Success(displayText: "File deleted"))
+            }
+        })
+    }
+}
+
+
+// Get user's manager if they have one.
+// Applies to work accounts only
+struct GetManager: Snippet
+{
+    let name = "Get manager"
+    let needAdminAccess: Bool = false
+    func execute(with completion: @escaping (_ result: Result) -> Void)
+    {
+        Snippets.graphClient.me().manager().request()?.getWithCompletion({ (directoryObject, error) in
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+            } else {
+                var displayString: String = "Manager information: \n"
+                
+                if let manager = directoryObject {
+                    if let managerName = manager.dictionaryFromItem()["displayName"] {
+                        displayString += "Manager is \(managerName)\n\n"
+                    }
+                    else {
+                        displayString += "No manager"
+                    }
+                    displayString += "Full object is\n\(manager)"
+                }
+                completion(.Success(displayText: "\(displayString)"))
+            }
+        })
+    }
+}
+
+
+// Get user's direct reports
+// Applies to work accounts only
+struct GetDirects: Snippet
+{
+    let name = "Get directs"
+    let needAdminAccess: Bool = false
+    func execute(with completion: @escaping (_ result: Result) -> Void)
+    {
+        Snippets.graphClient.me().directReports().request()?.getWithCompletion({ (directCollection, nextRequest, error) in
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+            } else {
+                var displayString = "List of directs: \n"
+                if let directs = directCollection {
+                    
+                    for direct: MSGraphDirectoryObject in directs.value as! [MSGraphDirectoryObject] {
+                        guard let name = direct.dictionaryFromItem()["displayName"] else {
+                            completion(.Failure(error: MSGraphError.UnexpectecError(errorString: "Display name not found")))
+                            return
+                        }
+                        displayString += "\(name)\n"
+                    }
+                }
+                
+                if let _ = nextRequest {
+                    displayString += "Next request available for more users"
+                }
+                
+                completion(.Success(displayText: "\(displayString)"))
+            }
+        })
+    }
+}
+
+// Gets the signed-in user's photo data if they have a photo.
+// This snippet will return metadata for the user photo.
+// Applies to work accounts only
+struct GetPhoto: Snippet
+{
+    let name = "Get photo"
+    let needAdminAccess: Bool = false
+    func execute(with completion: @escaping (_ result: Result) -> Void)
+    {
+        Snippets.graphClient.me().photo().request()?.getWithCompletion({ (photo, error) in
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+            } else {
+                guard let photoMetric = photo else {
+                    completion(.Failure(error: MSGraphError.UnexpectecError(errorString: "Photo width and height not found")))
+                    return
+                }
+                let displayString = "Photo size is \(photoMetric.height) x \(photoMetric.width)"
+                completion(.Success(displayText: "\(displayString)"))
+            }
+        })
+    }
+}
+
+// Creates a new user in the tenant.
+// Applicable to work accounts with admin rights
+struct GetPhotoValue: Snippet
+{
+    let name = "Get photo value"
+    let needAdminAccess: Bool = false
+    func execute(with completion: @escaping (_ result: Result) -> Void)
+    {
+        Snippets.graphClient.me().photoValue()?.download(completion: { (url, response, error) in
+            if let nsError = error as NSError? {
+                completion(.Failure(error: MSGraphError.NSErrorType(error: nsError)))
+                return
+            }
+            
+            guard let picUrl = url else {
+                completion(.Failure(error: MSGraphError.UnexpectecError(errorString: "No downloaded URL")))
+                return
+            }
+            
+            let picData = try! Data(contentsOf: picUrl)
+            let picImage = UIImage(data: picData)
+            
+            completion(.SuccessDownloadImage(displayImage: picImage))
+        })
+    }
+}
+
+// MARK: - Helper methods
+
+extension Snippets
+{
+    // Helper for creating a event object.
+    // Set series to true to create a recurring event.
+    static func createEventObject(isSeries series: Bool) -> MSGraphEvent
+    {
+        let event = MSGraphEvent()
+        event.subject = "Event Subject"
+        event.body = MSGraphItemBody()
+        event.body.contentType = MSGraphBodyType.text()
+        event.body.content = "Sample event body"
+        event.importance = MSGraphImportance.normal()
+        
+        let startDate: Date = Date(timeInterval: 30 * 60, since: Date())
+        let endDate: Date = Date(timeInterval: 30 * 60, since: startDate)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss"
+        
+        event.start = MSGraphDateTimeTimeZone()
+        event.start.dateTime = dateFormatter.string(from: startDate)
+        
+        // For more timezone settings, visit this link
+        // http://graph.microsoft.io/en-us/docs/api-reference/v1.0/resources/datetimetimezone
+        event.start.timeZone = "Pacific/Honolulu"
+        
+        event.end = MSGraphDateTimeTimeZone()
+        event.end.dateTime = dateFormatter.string(from: endDate)
+        event.end.timeZone = "Pacific/Honolulu"
+        
+        if !series {
+            event.type = MSGraphEventType.singleInstance()
+        }
+        else {
+            event.type = MSGraphEventType.seriesMaster()
+            
+            event.recurrence = MSGraphPatternedRecurrence()
+            event.recurrence.pattern = MSGraphRecurrencePattern()
+            event.recurrence.pattern.interval = 1
+            event.recurrence.pattern.type = MSGraphRecurrencePatternType.weekly()
+            event.recurrence.pattern.daysOfWeek = [MSGraphDayOfWeek.friday()]
+            event.recurrence.range = MSGraphRecurrenceRange()
+            event.recurrence.range.type = MSGraphRecurrenceRangeType.noEnd()
+            event.recurrence.range.startDate = MSDate(nsDate: startDate)
+        }
+        return event
+    }
+}
