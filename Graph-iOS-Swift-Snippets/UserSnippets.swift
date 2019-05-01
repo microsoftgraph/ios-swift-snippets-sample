@@ -5,6 +5,7 @@
 
 
 import Foundation
+import MSGraphSDK
 
 // MARK: - User snippets
 

@@ -5,6 +5,7 @@
 
 import Foundation
 import MSAL
+import MSGraphSDK
 
 class AuthenticationProvider: NSObject, MSAuthenticationProvider
 {

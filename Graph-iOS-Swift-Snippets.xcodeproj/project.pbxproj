@@ -42,7 +42,6 @@
 		96C4ED921CF6165A00B97245 /* SampleImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SampleImage.png; sourceTree = "<group>"; };
 		96C4ED961CF6707600B97245 /* UserSnippets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSnippets.swift; sourceTree = "<group>"; };
 		96C4ED981CF6709D00B97245 /* GroupsSnippets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsSnippets.swift; sourceTree = "<group>"; };
-		96C80A731CEA9377005D8FC4 /* Graph-iOS-Swift-Snippets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Graph-iOS-Swift-Snippets-Bridging-Header.h"; sourceTree = "<group>"; };
 		96C80A771CEA93AA005D8FC4 /* ApplicationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationConstants.swift; sourceTree = "<group>"; };
 		96E8E3751CF3D5CE00E3795C /* EmailBody.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EmailBody.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -151,7 +150,6 @@
 		96C4ED9D1CF6716D00B97245 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				96C80A731CEA9377005D8FC4 /* Graph-iOS-Swift-Snippets-Bridging-Header.h */,
 				96C80A771CEA93AA005D8FC4 /* ApplicationConstants.swift */,
 			);
 			name = Application;
@@ -247,8 +245,6 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Graph-iOS-Swift-Snippets/Pods-Graph-iOS-Swift-Snippets-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MSAL/MSAL.framework",
 				"${BUILT_PRODUCTS_DIR}/MSGraphSDK/MSGraphSDK.framework",
-				"${BUILT_PRODUCTS_DIR}/MSGraphSDK-NXOAuth2Adapter/MSGraphSDK_NXOAuth2Adapter.framework",
-				"${BUILT_PRODUCTS_DIR}/NXOAuth2Client/NXOAuth2Client.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
@@ -256,8 +252,6 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSAL.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSGraphSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSGraphSDK_NXOAuth2Adapter.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NXOAuth2Client.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
