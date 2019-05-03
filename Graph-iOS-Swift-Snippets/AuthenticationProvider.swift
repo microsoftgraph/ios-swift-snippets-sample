@@ -44,21 +44,7 @@ class AuthenticationProvider: NSObject, MSAuthenticationProvider
                         if let gs = error.userInfo[MSALGrantedScopesKey] as? Array<String> { grantedScopes = gs }
                         print("Trying to acquire a token with granted scopes: ", grantedScopes)
                         
-                        var accounts = [MSALAccount]()
-                        do {
-                            accounts = try self.msalClient.allAccounts()
-                        } catch let error as NSError {
-                            print("Error: ", error)
-                            completion(false, error)
-                            return
-                        }
-                        
-                        if let account = accounts.first {
-                            let silentParameters = MSALSilentTokenParameters(scopes: grantedScopes, account: account)
-                            self.msalClient.acquireTokenSilent(with: silentParameters, completionBlock: completionBlock!)
-                        } else {
-                            completion(false, nil)
-                        }
+                        self.acquireTokenSilent(scopes: grantedScopes, msalCompletionBlock: completionBlock!, completion: completion)
                         
                     case MSALError.internal:
                         
@@ -122,5 +108,26 @@ class AuthenticationProvider: NSObject, MSAuthenticationProvider
         }
         
         completionHandler(request, nil);
+    }
+    
+    // MARK: - Private
+    
+    private func acquireTokenSilent(scopes: [String], msalCompletionBlock: @escaping MSALCompletionBlock, completion:@escaping (_ success:Bool, _ error: NSError?) -> Void)
+    {
+        var accounts = [MSALAccount]()
+        do {
+            accounts = try self.msalClient.allAccounts()
+        } catch let error as NSError {
+            print("Error: ", error)
+            completion(false, error)
+            return
+        }
+        
+        if let account = accounts.first {
+            let silentParameters = MSALSilentTokenParameters(scopes: scopes, account: account)
+            self.msalClient.acquireTokenSilent(with: silentParameters, completionBlock: msalCompletionBlock)
+        } else {
+            completion(false, nil)
+        }
     }
 }
