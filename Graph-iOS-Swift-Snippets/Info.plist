@@ -62,6 +62,7 @@
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>msauth</string>
 		<string>msauthv2</string>
 	</array>
 </dict>
