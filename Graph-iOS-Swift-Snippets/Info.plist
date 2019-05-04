@@ -56,7 +56,6 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>msauth.com.microsoft.Graph-iOS-Swift-Snippets</string>
-				<string>auth</string>
 			</array>
 		</dict>
 	</array>
