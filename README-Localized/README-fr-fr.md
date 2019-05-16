@@ -1,24 +1,24 @@
-# Exemple d’extraits de code Microsoft Graph iOS Swift
+# <a name="microsoft-graph-ios-swift-snippets-sample"></a>Exemple d’extraits de code Microsoft Graph iOS Swift
 
-**Sommaire**
+**Table des matières**
 
 * [Introduction](#introduction)
-* [Conditions préalables](#conditions-préalables)
-* [Enregistrement et configuration de l’application](#enregistrement-et-configuration-de-lapplication)
-* [Création et débogage](#création-et-débogage)
-* [Code d’intérêt](#code-dintérêt)
-* [Exécution de l’exemple](#exécution-de-lexemple)
-* [Questions et commentaires](#questions-et-commentaires)
-* [Ressources supplémentaires](#ressources-supplémentaires)
+* [Conditions préalables](#prerequisites)
+* [Enregistrement et configuration de l’application](#register)
+* [Création et débogage](#build)
+* [Code d’intérêt](#code-of-interest)
+* [Exécution de l’exemple](#running-the-sample)
+* [Questions et commentaires](#questions)
+* [Ressources supplémentaires](#additional-resources)
 
 <a name="introduction"></a>
-##Introduction
+##<a name="introduction"></a>Introduction
 
 Cet exemple contient un référentiel des extraits de code qui illustrent l’utilisation du kit de développement Microsoft Graph pour envoyer des messages électroniques, gérer les groupes et effectuer d’autres activités avec les données d’Office 365. Il utilise le [kit de développement logiciel Microsoft Graph pour iOS](https://github.com/microsoftgraph/msgraph-sdk-ios) pour exploiter les données renvoyées par Microsoft Graph.
 
 Ce référentiel vous montre comment accéder à plusieurs ressources, notamment Microsoft Azure Active Directory (AD) et les API d’Office 365, en envoyant des requêtes HTTP à l’API Microsoft Graph dans une application iOS. 
 
-En outre, l’exemple utilise [msgraph-sdk-ios-nxoauth2-adapter](https://github.com/microsoftgraph/msgraph-sdk-ios-nxoauth2-adapter) pour l’authentification. Pour effectuer des requêtes, vous devez fournir un **MSAuthenticationProvider** capable d’authentifier les requêtes HTTPS avec un jeton de support OAuth 2.0 approprié. Nous allons utiliser cette infrastructure pour un exemple d’implémentation de MSAuthenticationProvider qui peut être utilisé pour commencer rapidement votre projet.
+En outre, l’exemple utilise [msgraph-sdk-ios-nxoauth2-adapter](https://github.com/microsoftgraph/msgraph-sdk-ios-nxoauth2-adapter) pour l’authentification. Pour effectuer des requêtes, vous devez fournir un élément **MSAuthenticationProvider** capable d’authentifier les requêtes HTTPS avec un jeton de support OAuth 2.0 approprié. Nous allons utiliser cette infrastructure pour un exemple d’implémentation de MSAuthenticationProvider qui peut être utilisé pour commencer rapidement votre projet.
 
  > **Remarque** **msgraph-sdk-ios-nxoauth2-adapter** est un exemple d’implémentation OAuth pour l’authentification dans cette application. Il est fourni à titre de démonstration.
 
@@ -29,19 +29,19 @@ Ces extraits sont simples et autonomes, et vous pouvez les copier-coller dans vo
  
 
 <a name="prerequisites"></a>
-## Conditions préalables ##
+## <a name="prerequisites"></a>Conditions préalables ##
 
 Cet exemple nécessite les éléments suivants :  
-* [Xcode](https://developer.apple.com/xcode/downloads/) d’Apple
+* [Xcode](https://developer.apple.com/xcode/downloads/) version 7.3.1 d’Apple 
 * Installation de [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html) comme gestionnaire de dépendances.
 * Un compte de messagerie professionnel ou personnel Microsoft comme Office 365 ou outlook.com, hotmail.com, etc. Vous pouvez vous inscrire à [Office 365 Developer](https://aka.ms/devprogramsignup) pour accéder aux ressources dont vous avez besoin afin de commencer à créer des applications Office 365.
 * Un ID client de l’application enregistrée auprès du [portail d’inscription de l’application Microsoft Graph](https://graph.microsoft.io/en-us/app-registration)
 * Comme indiqué ci-dessus, pour effectuer des requêtes d’authentification, vous devez fournir un **MSAuthenticationProvider** capable d’authentifier les requêtes HTTPS avec un jeton de support OAuth 2.0 approprié. 
 
+>**Remarque :** l’exemple a été testé sur Xcode 7.3.1. Cet exemple ne prend pas encore en charge Xcode 8 et iOS10, qui utilise l’infrastructure Swift 3.0.
 
-      
 <a name="register"></a>
-##Enregistrement et configuration de l’application
+##<a name="register-and-configure-the-app"></a>Enregistrement et configuration de l’application
 
 1. Connectez-vous au [portail d’inscription des applications](https://apps.dev.microsoft.com/) en utilisant votre compte personnel, professionnel ou scolaire.  
 2. Sélectionnez **Ajouter une application**.  
@@ -53,7 +53,7 @@ Cet exemple nécessite les éléments suivants :
 
 
 <a name="build"></a>
-## Création et débogage ##
+## <a name="build-and-debug"></a>Création et débogage ##
 
 1. Cloner ce référentiel
 2. Utilisez CocoaPods pour importer les dépendances d’authentification et le kit de développement logiciel Microsoft Graph :
@@ -66,7 +66,7 @@ Cet exemple nécessite les éléments suivants :
 
         pod install
 
-   Pour plus d’informations, consultez **Utilisation de CocoaPods** dans [Ressources supplémentaires](#ressources-supplémentaires).
+   Pour plus d’informations, consultez **Utilisation de CocoaPods** dans [Ressources supplémentaires](#AdditionalResources).
 
 3. Ouvrez **Graph-iOS-Swift-Snippets.xcworkspace**.
 4. Ouvrez **ApplicationConstants.swift**. Vous verrez que l’**ID client** du processus d’inscription peut être ajouté à la partie supérieure du fichier :
@@ -77,16 +77,15 @@ Cet exemple nécessite les éléments suivants :
     > Remarque : Pour plus d’informations sur les étendues d’autorisation requises pour utiliser cet exemple, consultez la section **Exécution de l’exemple** ci-dessous.
 5. Exécutez l’exemple.
 
-## Code d’intérêt
-Tout le code d’authentification peut être affiché dans le fichier **Authentication.swift**. Nous utilisons un exemple d’implémentation de MSAuthenticationProvider étendu de NXOAuth2Client pour prendre en charge la connexion des applications natives inscrites, l’actualisation automatique des jetons d’accès et la fonctionnalité de déconnexion :
-L’ID client et les étendues utilisées dans cet exemple sont définis dans **ApplicationConstants.swift**.
+## <a name="code-of-interest"></a>Code d’intérêt
+Tout le code d’authentification peut être affiché dans le fichier **Authentication.swift**. Nous utilisons un exemple d’implémentation de MSAuthenticationProvider étendu de NXOAuth2Client pour prendre en charge la connexion des applications natives inscrites, l’actualisation automatique des jetons d’accès et la fonctionnalité de déconnexion : L’ID client et les étendues utilisés dans cet exemple sont définis dans **ApplicationConstants.swift**.
 
 Tous les extraits sont situés sous **Graph-iOS-Swift-Snippets/Snippets** dans le navigateur de projet.
 - **Snippet.SWIFT** contient les protocoles, enums et structures utilisés pour créer la liste des extraits de code à utiliser dans l’application.
 - **UserSnippets.swift** contient les extraits relatifs aux utilisateurs.
 - **GroupsSnippets.swift** contient les extraits relatifs aux groupes.
 
-## Exécution de l’exemple
+## <a name="running-the-sample"></a>Exécution de l’exemple
 
 Une fois lancée, l’application affiche une liste de tâches courantes de l’utilisateur. Ces tâches peuvent être exécutées en fonction du niveau d’autorisations et du type de compte et sont indiquées dans les commentaires :
 
@@ -115,26 +114,26 @@ Vous pourrez effectuer plusieurs opérations simplement à l’aide des étendue
 Pour savoir quels extraits peuvent être exécutés par rapport à un compte administrateur, professionnel ou personnel, affichez les fichiers UserSnippets.swift et GroupsSnippets.swift sous Graph-iOS-Swift-Snippets/Snippets dans le navigateur de projet. Chaque description de l’extrait de code détaille le niveau d’accès.
 
 <a name="contributing"></a>
-## Contribution ##
+## <a name="contributing"></a>Contribution ##
 
 Si vous souhaitez contribuer à cet exemple, voir [CONTRIBUTING.MD](/CONTRIBUTING.md).
 
 Ce projet a adopté le [code de conduite Microsoft Open Source](https://opensource.microsoft.com/codeofconduct/). Pour plus d’informations, reportez-vous à la [FAQ relative au code de conduite](https://opensource.microsoft.com/codeofconduct/faq/) ou contactez [opencode@microsoft.com](mailto:opencode@microsoft.com) pour toute question ou tout commentaire.
 
 <a name="questions"></a>
-## Questions et commentaires
+## <a name="questions-and-comments"></a>Questions et commentaires
 
 Nous serions ravis de connaître votre opinion sur le projet de bibliothèque d’extraits de code Microsoft Graph UWP. Vous pouvez nous faire part de vos questions et suggestions dans la rubrique [Problèmes](https://github.com/microsoftgraph/iOS-objectiveC-snippets-sample/issues) de ce référentiel.
 
 Votre avis compte beaucoup pour nous. Communiquez avec nous sur [Stack Overflow](http://stackoverflow.com/questions/tagged/office365+or+microsoftgraph). Posez vos questions avec la balise [MicrosoftGraph].
 
 <a name="additional-resources"></a>
-## Ressources supplémentaires ##
+## <a name="additional-resources"></a>Ressources supplémentaires ##
 
-- [Présentation de Microsoft Graph](http://graph.microsoft.io)
+- [Présentation de Microsoft Graph](http://graph.microsoft.io)
 - [Exemples de code du développeur Office](http://dev.office.com/code-samples)
 - [Centre de développement Office](http://dev.office.com/)
 
 
-## Copyright
+## <a name="copyright"></a>Copyright
 Copyright (c) 2016 Microsoft. Tous droits réservés.
