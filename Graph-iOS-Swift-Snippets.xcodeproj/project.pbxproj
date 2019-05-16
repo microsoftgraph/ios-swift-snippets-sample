@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		960EBA121CEA8472007B8171 /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960EBA111CEA8472007B8171 /* ConnectViewController.swift */; };
-		9682B8C31CEA92B500EEA064 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9682B8C21CEA92B500EEA064 /* Authentication.swift */; };
+		9682B8C31CEA92B500EEA064 /* AuthenticationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9682B8C21CEA92B500EEA064 /* AuthenticationProvider.swift */; };
 		96B34CD41CE548C500B6F4E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B34CD31CE548C500B6F4E8 /* AppDelegate.swift */; };
 		96B34CD61CE548C500B6F4E8 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B34CD51CE548C500B6F4E8 /* MasterViewController.swift */; };
 		96B34CD81CE548C500B6F4E8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B34CD71CE548C500B6F4E8 /* DetailViewController.swift */; };
@@ -21,14 +21,16 @@
 		96C4ED991CF6709D00B97245 /* GroupsSnippets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C4ED981CF6709D00B97245 /* GroupsSnippets.swift */; };
 		96C80A781CEA93AA005D8FC4 /* ApplicationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C80A771CEA93AA005D8FC4 /* ApplicationConstants.swift */; };
 		96E8E3761CF3D5CE00E3795C /* EmailBody.html in Resources */ = {isa = PBXBuildFile; fileRef = 96E8E3751CF3D5CE00E3795C /* EmailBody.html */; };
-		A94B5F82F665609A7EC85492 /* libPods-Graph-iOS-Swift-Snippets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A432D87B00168EC956CE5957 /* libPods-Graph-iOS-Swift-Snippets.a */; };
+		BDBB226ADB67255D4C8ED655 /* Pods_Graph_iOS_Swift_Snippets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7636C72C1EBF480F90E6E63E /* Pods_Graph_iOS_Swift_Snippets.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1A6FD9F3B470B571895415AF /* Pods-Graph-iOS-Swift-Snippets.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graph-iOS-Swift-Snippets.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Graph-iOS-Swift-Snippets/Pods-Graph-iOS-Swift-Snippets.debug.xcconfig"; sourceTree = "<group>"; };
+		238BA009227BB16D00A5BACD /* Graph-iOS-Swift-Snippets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Graph-iOS-Swift-Snippets.entitlements"; sourceTree = "<group>"; };
+		7636C72C1EBF480F90E6E63E /* Pods_Graph_iOS_Swift_Snippets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Graph_iOS_Swift_Snippets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88338EAC202F86B11BFC9413 /* Pods-Graph-iOS-Swift-Snippets.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graph-iOS-Swift-Snippets.release.xcconfig"; path = "Pods/Target Support Files/Pods-Graph-iOS-Swift-Snippets/Pods-Graph-iOS-Swift-Snippets.release.xcconfig"; sourceTree = "<group>"; };
 		960EBA111CEA8472007B8171 /* ConnectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
-		9682B8C21CEA92B500EEA064 /* Authentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		9682B8C21CEA92B500EEA064 /* AuthenticationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationProvider.swift; sourceTree = "<group>"; };
 		96B34CD01CE548C500B6F4E8 /* Graph-iOS-Swift-Snippets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Graph-iOS-Swift-Snippets.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96B34CD31CE548C500B6F4E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		96B34CD51CE548C500B6F4E8 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -41,10 +43,8 @@
 		96C4ED921CF6165A00B97245 /* SampleImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SampleImage.png; sourceTree = "<group>"; };
 		96C4ED961CF6707600B97245 /* UserSnippets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSnippets.swift; sourceTree = "<group>"; };
 		96C4ED981CF6709D00B97245 /* GroupsSnippets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsSnippets.swift; sourceTree = "<group>"; };
-		96C80A731CEA9377005D8FC4 /* Graph-iOS-Swift-Snippets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Graph-iOS-Swift-Snippets-Bridging-Header.h"; sourceTree = "<group>"; };
 		96C80A771CEA93AA005D8FC4 /* ApplicationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationConstants.swift; sourceTree = "<group>"; };
 		96E8E3751CF3D5CE00E3795C /* EmailBody.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EmailBody.html; sourceTree = "<group>"; };
-		A432D87B00168EC956CE5957 /* libPods-Graph-iOS-Swift-Snippets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Graph-iOS-Swift-Snippets.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A94B5F82F665609A7EC85492 /* libPods-Graph-iOS-Swift-Snippets.a in Frameworks */,
+				BDBB226ADB67255D4C8ED655 /* Pods_Graph_iOS_Swift_Snippets.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +89,7 @@
 		96B34CD21CE548C500B6F4E8 /* Graph-iOS-Swift-Snippets */ = {
 			isa = PBXGroup;
 			children = (
+				238BA009227BB16D00A5BACD /* Graph-iOS-Swift-Snippets.entitlements */,
 				96C4ED9D1CF6716D00B97245 /* Application */,
 				96C4ED9C1CF6715600B97245 /* Views */,
 				96C4ED9B1CF6713300B97245 /* Authentication */,
@@ -134,7 +135,7 @@
 		96C4ED9B1CF6713300B97245 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				9682B8C21CEA92B500EEA064 /* Authentication.swift */,
+				9682B8C21CEA92B500EEA064 /* AuthenticationProvider.swift */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
@@ -151,7 +152,6 @@
 		96C4ED9D1CF6716D00B97245 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				96C80A731CEA9377005D8FC4 /* Graph-iOS-Swift-Snippets-Bridging-Header.h */,
 				96C80A771CEA93AA005D8FC4 /* ApplicationConstants.swift */,
 			);
 			name = Application;
@@ -160,7 +160,7 @@
 		9F04E14C6BD42E60D6DC42D4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A432D87B00168EC956CE5957 /* libPods-Graph-iOS-Swift-Snippets.a */,
+				7636C72C1EBF480F90E6E63E /* Pods_Graph_iOS_Swift_Snippets.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -176,8 +176,7 @@
 				96B34CCC1CE548C500B6F4E8 /* Sources */,
 				96B34CCD1CE548C500B6F4E8 /* Frameworks */,
 				96B34CCE1CE548C500B6F4E8 /* Resources */,
-				6635AA40E179800EFF09A4C7 /* [CP] Embed Pods Frameworks */,
-				A57DD8FE395943180AEEFA44 /* [CP] Copy Pods Resources */,
+				47FD35A13F916C6982C087C5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -195,17 +194,22 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Jason Kim";
 				TargetAttributes = {
 					96B34CCF1CE548C500B6F4E8 = {
 						CreatedOnToolsVersion = 7.3.1;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
 			buildConfigurationList = 96B34CCB1CE548C500B6F4E8 /* Build configuration list for PBXProject "Graph-iOS-Swift-Snippets" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -237,19 +241,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6635AA40E179800EFF09A4C7 /* [CP] Embed Pods Frameworks */ = {
+		47FD35A13F916C6982C087C5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputFileListPaths = (
+			);
 			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Graph-iOS-Swift-Snippets/Pods-Graph-iOS-Swift-Snippets-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/MSAL/MSAL.framework",
+				"${BUILT_PRODUCTS_DIR}/MSGraphSDK/MSGraphSDK.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSAL.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSGraphSDK.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Graph-iOS-Swift-Snippets/Pods-Graph-iOS-Swift-Snippets-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Graph-iOS-Swift-Snippets/Pods-Graph-iOS-Swift-Snippets-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8548920E38D8B76ACEB030AB /* [CP] Check Pods Manifest.lock */ = {
@@ -258,28 +271,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Graph-iOS-Swift-Snippets-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		A57DD8FE395943180AEEFA44 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Graph-iOS-Swift-Snippets/Pods-Graph-iOS-Swift-Snippets-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -296,7 +297,7 @@
 				96C4ED991CF6709D00B97245 /* GroupsSnippets.swift in Sources */,
 				96B34CD41CE548C500B6F4E8 /* AppDelegate.swift in Sources */,
 				96B34CE81CE54D1000B6F4E8 /* Snippets.swift in Sources */,
-				9682B8C31CEA92B500EEA064 /* Authentication.swift in Sources */,
+				9682B8C31CEA92B500EEA064 /* AuthenticationProvider.swift in Sources */,
 				96C80A781CEA93AA005D8FC4 /* ApplicationConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -327,18 +328,29 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -372,18 +384,29 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -402,6 +425,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -412,12 +436,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Graph-iOS-Swift-Snippets/Graph-iOS-Swift-Snippets.entitlements";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Graph-iOS-Swift-Snippets/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.microsoft.Graph-iOS-Swift-Snippets";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Graph-iOS-Swift-Snippets/Graph-iOS-Swift-Snippets-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -428,11 +456,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Graph-iOS-Swift-Snippets/Graph-iOS-Swift-Snippets.entitlements";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Graph-iOS-Swift-Snippets/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.microsoft.Graph-iOS-Swift-Snippets";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Graph-iOS-Swift-Snippets/Graph-iOS-Swift-Snippets-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

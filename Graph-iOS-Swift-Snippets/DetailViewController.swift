@@ -13,47 +13,32 @@ class DetailViewController: UIViewController {
     @IBOutlet var resultStackView: UIStackView!
     @IBOutlet var accessLevelLabel: UILabel!
     
-    var snippet: Snippet? {
-        didSet {
-            configureView()
-        }
+    var snippet: Snippet?
+    {
+        didSet { configureView() }
     }
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         configureView()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    override func viewDidAppear(animated: Bool) {
+    
+    override func viewDidAppear(_ animated: Bool)
+    {
         super.viewDidAppear(animated)
         
-        if let _ = snippet {
-            executeSnippet()
-        }
+        guard let _ = snippet else { return }
         
+        executeSnippet()
     }
     
-    @IBAction func runSnippet(sender: AnyObject) {
-        UIView.animateWithDuration(0.35,
-                                   animations: {
-                                    self.activityIndicatorView.hidden = true
-            }) { (finished) in
-                self.activityIndicatorView.stopAnimating()
-        }
-    }
-
-}
-
-
-// MARK: - Execution of snippets
-extension DetailViewController {
-    func executeSnippet() {
+    // MARK: - Private
+    
+    private func executeSnippet()
+    {
         guard let _ = snippet else { return }
+        
         self.snippet!.execute { (result: Result) in
             switch result {
             case .Failure(let error):
@@ -62,17 +47,17 @@ extension DetailViewController {
                 case .NSErrorType(let nsError):
                     displayText = nsError.localizedDescription
                     
-                    for (key, value) in nsError.userInfo.enumerate() {
+                    for (key, value) in nsError.userInfo.enumerated() {
                         displayText += "\n\(key): \(value)"
                     }
                     
-                    break;
+                    break
                 case.UnexpectecError(let errorString):
                     displayText = errorString
-                    break;
+                    break
                 }
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async {
                     let result = UILabel()
                     result.numberOfLines = 0
                     result.text = displayText
@@ -81,65 +66,60 @@ extension DetailViewController {
                     self.accessLevelLabel.removeFromSuperview()
                     
                     self.hideActivityIndicator()
-                })
-
+                }
+                
                 break
             case .Success(let displayText):
                 if let text = displayText {
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async {
                         let result = UILabel()
                         result.numberOfLines = 0
                         result.text = "Success\n\n\(text)"
                         
                         self.resultStackView.addArrangedSubview(result)
                         self.hideActivityIndicator()
-                    })
+                    }
                 }
                 break
                 
             case .SuccessDownloadImage(let displayImage):
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async {
                     let imageView = UIImageView(image: displayImage)
                     
                     self.resultStackView.addArrangedSubview(imageView)
                     self.hideActivityIndicator()
-                    })
+                }
                 break
             }
         }
     }
-}
-
-// MARK: - UI Helpers
-extension DetailViewController {
-
-    func configureView() {
-        if let label = snippetNameLabel,
-            _ = self.snippet{
-            label.text = self.snippet!.name
-            accessLevelLabel.hidden = !(self.snippet!.needAdminAccess)
-        }
+    
+    private func hideActivityIndicator()
+    {
+        self.activityIndicatorView.stopAnimating()
         
-        guard let _ = snippet else { return }
+        UIView.animate(withDuration: 0.35, animations: {
+            self.activityIndicatorView.isHidden = true
+        }) { (finished) in
+            self.activityIndicatorView.stopAnimating()
+        }
     }
     
+    func configureView()
+    {
+        if let label = snippetNameLabel, let snippet = self.snippet {
+            label.text = snippet.name
+            accessLevelLabel.isHidden = !snippet.needAdminAccess
+        }
+    }
     
-    func setResult(with string: String) {
+    func setResult(with string: String)
+    {
         let label = UILabel()
         label.numberOfLines = 0
         label.text = string
         
-        self.resultStackView.addArrangedSubview(label)
-    }
-    
-    func hideActivityIndicator() {
-        self.activityIndicatorView.stopAnimating()
-        
-        UIView.animateWithDuration(0.35,
-                                   animations: { self.activityIndicatorView.hidden = true })
-        { (finished) in
-            self.activityIndicatorView.stopAnimating()
-        }
+        resultStackView.addArrangedSubview(label)
     }
 }
 
