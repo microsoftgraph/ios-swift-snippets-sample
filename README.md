@@ -1,3 +1,23 @@
+---
+page_type: sample
+products:
+- office-365
+- office-outlook
+- ms-graph
+languages:
+- swift
+extensions:
+  contentType: samples
+  technologies:
+  - Microsoft Graph
+  services:
+  - Office 365
+  - Outlook
+  - Groups
+  platforms:
+  - iOS
+  createdDate: 5/26/2016 8:08:35 AM
+---
 # Microsoft Graph iOS Swift Snippets Sample
 
 ## Table of contents
