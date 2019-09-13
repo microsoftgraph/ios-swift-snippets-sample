@@ -6,6 +6,7 @@ products:
 - ms-graph
 languages:
 - swift
+description: "This sample uses the Microsoft Graph Client Library to work with the data, and uses the Active Directory Authentication Library (ADAL) for authentication of users' work or school Office 365 accounts."
 extensions:
   contentType: samples
   technologies:
