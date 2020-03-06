@@ -1,24 +1,3 @@
----
-page_type: sample
-products:
-- office-365 
-- office-outlook
-- ms-graph
-languages:
-- swift
-description: "This sample uses the Microsoft Graph Client Library to work with the data, and uses the Active Directory Authentication Library (ADAL) for authentication of users' work or school Office 365 accounts."
-extensions:
-  contentType: samples
-  technologies:
-  - Microsoft Graph
-  services:
-  - Office 365
-  - Outlook
-  - Groups
-  platforms:
-  - iOS
-  createdDate: 5/26/2016 8:08:35 AM
----
 # Microsoft Graph iOS Swift Snippets Sample
 
 ## Table of contents
