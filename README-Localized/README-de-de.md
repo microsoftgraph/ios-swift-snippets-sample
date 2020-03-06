@@ -1,91 +1,87 @@
-# <a name="microsoft-graph-ios-swift-snippets-sample"></a>Beispiel für iOS-Swift-Codeausschnitte für Microsoft Graph
+---
+page_type: sample
+products:
+- office-365
+- office-outlook
+- ms-graph
+languages:
+- swift
+extensions:
+  contentType: samples
+  technologies:
+  - Microsoft Graph
+  services:
+  - Office 365
+  - Outlook
+  - Groups
+  platforms:
+  - iOS
+  createdDate: 5/26/2016 8:08:35 AM
+---
+# Beispiel für iOS-Swift-Codeausschnitte für Microsoft Graph
 
-**Inhaltsverzeichnis**
+## Inhaltsverzeichnis
 
-* [Einführung](#introduction)
-* [Voraussetzungen](#prerequisites)
-* [Registrieren und Konfigurieren der App](#register)
-* [Erstellen und Debuggen](#build)
-* [Interessanter Code](#code-of-interest)
-* [Ausführen des Beispiels](#running-the-sample)
-* [Fragen und Kommentare](#questions)
-* [Weitere Ressourcen](#additional-resources)
+- [Einführung](#introduction)
+- [Voraussetzungen](#prerequisites)
+- [Registrieren und Konfigurieren der App](#register-and-configure-the-app)
+- [Erstellen und Debuggen](#build-and-debug)
+- [Ausführen des Beispiels](#running-the-sample)
 
-<a name="introduction"></a>
-##<a name="introduction"></a>Einführung
+## Einführung
 
 Dieses Beispiel enthält ein Repository von Codeausschnitten, die zeigen, wie das Microsoft Graph-SDK zum Senden von E-Mails, Verwalten von Gruppen und Ausführen anderer Aktivitäten mit Office 365-Daten verwendet wird. Es verwendet das [Microsoft Graph-SDK für iOS](https://github.com/microsoftgraph/msgraph-sdk-ios), um mit Daten zu arbeiten, die von Microsoft Graph zurückgegeben werden.
 
-In diesem Repository wird gezeigt, wie Sie auf mehrere Ressourcen, einschließlich Microsoft Azure Active Directory (AD) und die Office 365-APIs, zugreifen, indem Sie HTTP-Anforderungen an die Microsoft Graph-API in einer iOS-App ausführen. 
-
-Außerdem verwendet das Beispiel [msgraph-sdk-ios-nxoauth2-adapter](https://github.com/microsoftgraph/msgraph-sdk-ios-nxoauth2-adapter) für die Authentifizierung. Um Anforderungen auszuführen, muss ein **MSAuthenticationProvider** bereitgestellt werden, der HTTPS-Anforderungen mit einem entsprechenden OAuth 2.0-Bearertoken authentifizieren kann. Wir verwenden dieses Framework für eine Beispielimplementierung von MSAuthenticationProvider, die Sie für einen Schnelleinstieg in Ihr Projekt verwenden können.
-
- > Hinweis **msgraph-sdk-ios-nxoauth2-adapter** ist eine Beispielimplementierung von OAuth für die Authentifizierung in dieser App und dient Demonstrationszwecken.
+In diesem Repository wird gezeigt, wie Sie auf mehrere Ressourcen, einschließlich Microsoft Azure Active Directory (AD) und die Office 365-APIs, zugreifen, indem Sie HTTP-Anforderungen an die Microsoft Graph-API in einer iOS-App ausführen.
 
 Diese Ausschnitte sind einfach und eigenständig, und Sie können sie ggf. in Ihren eigenen Code kopieren und einfügen oder als Ressource verwenden, um zu lernen, wie das Microsoft Graph-SDK für iOS verwendet wird.
 
 **Hinweis:** Verwenden Sie dieses Beispiel, wenn möglich, mit einem persönlichen Konto oder einem Testkonto. Das Beispiel bereinigt nicht immer die erstellten Objekte in Ihrem Postfach und Kalender. Derzeit müssen Sie Beispiel-E-Mails und -Kalenderereignisse manuell entfernen. Beachten Sie auch, dass die Codeausschnitte, die Nachrichten abrufen und senden und Ereignisse abrufen, erstellen, aktualisieren und löschen, nicht mit allen persönlichen Konten funktionieren. Diese Vorgänge funktionieren dann, wenn diese Konten so aktualisiert werden, dass sie mit dem v2-Authentifizierungsendpunkt arbeiten.
 
- 
+## Anforderungen
 
-<a name="prerequisites"></a>
-## <a name="prerequisites"></a>Anforderungen ##
+Für dieses Beispiel ist Folgendes erforderlich:
 
-Für dieses Beispiel ist Folgendes erforderlich:  
-* [Xcode](https://developer.apple.com/xcode/downloads/) Version 7.3.1 von Apple 
-* Installation von [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html) als ein Abhängigkeits-Manager.
-* Ein geschäftliches oder persönliches Microsoft-E-Mail-Konto, z. B. Office 365 oder outlook.com, hotmail.com usw. Sie können sich für ein [Office 365-Entwicklerabonnement](https://aka.ms/devprogramsignup) registrieren. Dieses umfasst die Ressourcen, die Sie zum Erstellen von Office 365-Apps benötigen.
-* Eine Client-ID aus der registrierten App unter dem [App-Registrierungsportal von Microsoft Graph](https://graph.microsoft.io/de-de/app-registration)
-* Wie zuvor erwähnt, muss ein **MSAuthenticationProvider** bereitgestellt werden, der HTTPS-Anforderungen mit einem entsprechenden OAuth 2.0-Bearertoken authentifizieren kann, um Anforderungen auszuführen. 
+- [Xcode](https://developer.apple.com/xcode/downloads/), Version 10.2.1
+- Installation von [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html) als ein Abhängigkeits-Manager.
+- Ein geschäftliches oder persönliches Microsoft-E-Mail-Konto, z. B. Office 365 oder outlook.com, hotmail.com usw. Sie können sich für ein [Office 365-Entwicklerabonnement](https://aka.ms/devprogramsignup) registrieren. Dieses umfasst die Ressourcen, die Sie zum Erstellen von Office 365-Apps benötigen.
 
->**Hinweis:** Das Beispiel wurde auf Xcode 7.3.1 getestet. In diesem Beispiel werden Xcode 8 und iOS10 nicht unterstützt, da hier das Swift 3.0-Framework verwendet wird.
+## Registrieren und Konfigurieren der App
 
-<a name="register"></a>
-##<a name="register-and-configure-the-app"></a>Registrieren und Konfigurieren der App
+1. Öffnen Sie einen Browser, und navigieren Sie zum [Azure Active Directory Admin Center](https://aad.portal.azure.com). Melden Sie sich mit einem **persönlichen Konto** (auch: Microsoft-Konto) bzw. einem **Geschäfts-, Schul- oder Unikonto** an.
 
-1. Melden Sie sich beim [App-Registrierungsportal](https://apps.dev.microsoft.com/) entweder mit Ihrem persönlichen oder geschäftlichen Konto oder mit Ihrem Schulkonto an.  
-2. Klicken Sie auf **App hinzufügen**.  
-3. Geben Sie einen Namen für die App ein, und wählen Sie **Anwendung erstellen** aus. Die Registrierungsseite wird angezeigt, und die Eigenschaften der App werden aufgeführt.  
-4. Wählen Sie unter **Plattformen** die Option **Plattform hinzufügen** aus.  
-5. Wählen Sie **Mobile Anwendung** aus.  
-6. Kopieren Sie die Client-ID (App-ID) für die spätere Verwendung. Sie müssen diesen Wert in die Beispiel-App eingeben. Die App-ID ist ein eindeutiger Bezeichner für Ihre App.   
-7. Klicken Sie auf **Speichern**.  
+1. Wählen Sie in der linken Navigationsleiste **Azure Active Directory** aus, und wählen Sie dann **App-Registrierungen** unter **Verwalten** aus.
 
+1. Wählen Sie **Neue Registrierungen** aus. Legen Sie auf der Seite **Anwendung registrieren** die Werte wie folgt fest.
 
-<a name="build"></a>
-## <a name="build-and-debug"></a>Erstellen und Debuggen ##
+    - Legen Sie **Name** auf `Swift-Codeausschnittbeispiel` fest.
+    - Legen Sie **Unterstützte Kontotypen** auf **Konten in allen Organisationsverzeichnissen und persönliche Microsoft-Konten** fest.
+    - Ändern Sie unter **Umleitungs-URI** die Dropdownliste auf **Öffentlicher Client (mobil & Desktop)**, und legen Sie den Wert auf `msauth.com.microsoft.Graph-iOS-Swift-Snippets://auth` fest.
+
+1. Wählen Sie **Registrieren** aus. Kopieren Sie auf der Seite **Swift-Codeausschnittbeispiel** den Wert von **Anwendungs-ID (Client-ID)**, und speichern Sie ihn. Sie benötigen ihn im nächsten Schritt.
+
+## Erstellen und Debuggen
 
 1. Klonen dieses Repositorys
-2. Verwenden Sie CocoaPods, um das Microsoft Graph-SDK und Authentifizierungsabhängigkeiten zu importieren:
 
-        pod 'MSGraphSDK'
-        pod 'MSGraphSDK-NXOAuth2Adapter'
+1. Öffnen Sie ein **Terminal**, und navigieren Sie zum Stamm des Projekts. Führen Sie den folgenden Befehl aus, um Abhängigkeiten zu installieren.
 
+    ```Shell
+    pod install
+    ```
 
- Diese Beispiel-App enthält bereits eine POD-Datei, die die Pods in das Projekt überträgt. Navigieren Sie einfach über das **Terminal** zum Projekt, und führen Sie Folgendes aus:
+1. Öffnen Sie **Graph-iOS-Swift-Snippets.xcworkspace** in Xcode.
 
-        pod install
+1. Öffnen **Sie ApplicationConstants.swift**. Ersetzen Sie `ENTER_CLIENT_ID` durch die Anwendungs-ID, die Sie durch die Registrierung Ihrer APP erhalten haben.
 
-   Weitere Informationen finden Sie im Thema über das **Verwenden von CocoaPods** in [Zusätzliche Ressourcen](#AdditionalResources).
+    ```swift
+    // You will set your application's clientId
+    static let clientId = "ENTER_CLIENT_ID"
+    ```
 
-3. Öffnen Sie **Graph-iOS-Swift-Snippets.xcworkspace**.
-4. Öffnen Sie **ApplicationConstants.swift**. Sie werden sehen, dass die **ClientID** aus dem Registrierungsprozess am Anfang der Datei hinzugefügt werden kann:
-   ```swift
-   // You will set your application's clientId
-   static let clientId = "ENTER_CLIENT_ID"    
-   ```
-    > Hinweis: Weitere Informationen zu Berechtigungsbereichen, die für die Verwendung dieses Beispiels erforderlich sind, finden Sie im folgenden Abschnitt **Ausführen des Beispiels**.
-5. Führen Sie das Beispiel aus.
+1. Führen Sie das Beispiel aus.
 
-## <a name="code-of-interest"></a>Interessanter Code
-Der gesamte Authentifizierungscode kann in der Datei **Authentication.swift** angezeigt werden. Wir verwenden eine Beispielimplementierung von MSAuthenticationProvider, die über „NXOAuth2Client“ hinaus erweitert wurde, um Anmeldeinformationen für registrierte systemeigene Apps, eine automatische Aktualisierung von Zugriffstoken sowie eine Abmeldefunktion bereitzustellen: Die Client-ID und die Bereiche, die in diesem Beispiel verwendet werden, sind in **ApplicationConstants.swift** definiert.
-
-Alle Codeausschnitte befinden sich unter **Graph-iOS-Swift-Codeausschnitte/Ausschnitte** innerhalb des Projekt-Navigators.
-- **Snippet.SWIFT** enthält Protokolle, Enumerationen und Strukturen, die zum Erstellen von Codeausschnittslisten verwendet werden, die in der App verwendet werden sollen.
-- **UserSnippets.swift** enthält Ausschnitte im Zusammenhang mit Benutzern.
-- **GroupSnippets.swift** enthält Ausschnitte im Zusammenhang mit Gruppen.
-
-## <a name="running-the-sample"></a>Ausführen des Beispiels
+## Ausführen des Beispiels
 
 Nach dem Start wird in der App eine Liste allgemeiner Benutzeraufgaben angezeigt. Diese Aufgaben können basierend auf Kontotyp und Berechtigungsstufe ausgeführt werden und werden in Kommentaren notiert.
 
@@ -93,47 +89,14 @@ Nach dem Start wird in der App eine Liste allgemeiner Benutzeraufgaben angezeigt
 - Aufgaben, die nur für Geschäfts- oder Schulkonten gelten, z. B. das Abrufen eines Vorgesetzten eines Benutzers oder eines Kontofotos.
 - Aufgaben, die nur für Geschäfts- oder Schulkonten mit Administratorberechtigungen gelten, z. B. das Abrufen von Gruppenmitgliedern oder das Erstellen neuer Benutzerkonten.
 
-Wählen Sie die Aufgabe aus, die Sie ausführen möchten, und klicken Sie darauf, um sie auszuführen. Beachten Sie, dass die ausgewählten Aufgaben fehlschlagen, wenn Sie sich mit einem Konto anmelden, das nicht über die entsprechenden Berechtigungen für die Aufgaben verfügt. Wenn Sie beispielsweise versuchen, einen bestimmten Ausschnitt, z. B. das Abrufen aller Mandantengruppen, auf einem Konto auszuführen, das nicht über Administratorberechtigungen in der Organisation verfügt, schlägt der Vorgang fehl. Oder wenn Sie sich mit einem persönlichen Konto wie Hotmail.com anmelden und versuchen, den Vorgesetzten des angemeldeten Benutzers abzurufen, schlägt dieser Vorgang fehl.
+Wählen Sie die Aufgabe aus, die Sie ausführen möchten, und klicken Sie darauf, um sie auszuführen. Beachten Sie, dass die ausgewählten Aufgaben fehlschlagen, wenn Sie sich mit einem Konto anmelden, das nicht über die entsprechenden Berechtigungen für die Aufgaben verfügt. Wenn Sie beispielsweise versuchen, einen bestimmten Ausschnitt, z. B. das Abrufen aller Mandantengruppen, auf einem Konto auszuführen, das nicht über Administratorberechtigungen in der Organisation verfügt, schlägt der Vorgang fehl. Oder wenn Sie sich mit einem persönlichen Konto anmelden und versuchen, den Vorgesetzten des angemeldeten Benutzers abzurufen, schlägt dieser Vorgang fehl.
 
-Diese Beispiel-App ist derzeit mit dem folgenden Bereichen in „ApplicationConstants.swift“ konfiguriert.
-
-    "https://graph.microsoft.com/User.Read",
-    "https://graph.microsoft.com/User.ReadWrite",
-    "https://graph.microsoft.com/User.ReadBasic.All",
-    "https://graph.microsoft.com/Mail.Send",
-    "https://graph.microsoft.com/Calendars.ReadWrite",
-    "https://graph.microsoft.com/Mail.ReadWrite",
-    "https://graph.microsoft.com/Files.ReadWrite",
-
-Indem Sie nur die oben definierten Bereiche verwenden, können Sie mehrere Vorgänge ausführen. Es gibt allerdings einige Vorgänge, für deren ordnungsgemäßes Ausführen Administratorberechtigungen erforderlich sind, und die Aufgaben in der Benutzeroberfläche werden so gekennzeichnet, dass Administratorzugriff erforderlich ist. Administratoren können die folgenden Bereiche zu „Authentication.constants.m“ hinzufügen, um diese Ausschnitte auszuführen:
-
-    "https://graph.microsoft.com/Directory.AccessAsUser.All",
-    "https://graph.microsoft.com/User.ReadWrite.All"
-    "https://graph.microsoft.com/Group.ReadWrite.All"
-
-Um zu sehen, welche Ausschnitte in einem Administrator- oder Organisationskonto oder in einem persönlichen Konto ausgeführt werden können, sehen Sie sich die Dateien „UserSnippets.swift and GroupsSnippets.swift“ unter „Graph-iOS-Swift-Snippets/Snippets“ im Projekt-Navigator an. In jeder Codeausschnittbeschreibung ist die Zugriffsstufe aufgeführt.
-
-<a name="contributing"></a>
-## <a name="contributing"></a>Mitwirkung ##
+## Mitwirkung
 
 Wenn Sie einen Beitrag zu diesem Beispiel leisten möchten, finden Sie unter [CONTRIBUTING.MD](/CONTRIBUTING.md) weitere Informationen.
 
 In diesem Projekt wurden die [Microsoft Open Source-Verhaltensregeln](https://opensource.microsoft.com/codeofconduct/) übernommen. Weitere Informationen finden Sie unter [Häufig gestellte Fragen zu Verhaltensregeln](https://opensource.microsoft.com/codeofconduct/faq/), oder richten Sie Ihre Fragen oder Kommentare an [opencode@microsoft.com](mailto:opencode@microsoft.com).
 
-<a name="questions"></a>
-## <a name="questions-and-comments"></a>Fragen und Kommentare
+## Copyright
 
-Wir schätzen Ihr Feedback hinsichtlich des Microsoft Graph UWP Snippets Library-Projekts. Sie können uns Ihre Fragen und Vorschläge über den Abschnitt [Probleme](https://github.com/microsoftgraph/iOS-objectiveC-snippets-sample/issues) dieses Repositorys senden.
-
-Ihr Feedback ist uns wichtig. Nehmen Sie unter [Stack Overflow](http://stackoverflow.com/questions/tagged/office365+or+microsoftgraph) Kontakt mit uns auf. Taggen Sie Ihre Fragen mit [MicrosoftGraph].
-
-<a name="additional-resources"></a>
-## <a name="additional-resources"></a>Zusätzliche Ressourcen ##
-
-- [Microsoft Graph-Übersicht](http://graph.microsoft.io)
-- [Office-Entwicklercodebeispiele](http://dev.office.com/code-samples)
-- [Office Dev Center](http://dev.office.com/)
-
-
-## <a name="copyright"></a>Copyright
 Copyright (c) 2016 Microsoft. Alle Rechte vorbehalten.
